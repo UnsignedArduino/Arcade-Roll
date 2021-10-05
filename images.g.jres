@@ -69,6 +69,16 @@
         "mimeType": "image/x-mkcd-f4",
         "displayName": "cancel_rolls_selected_button"
     },
+    "image15": {
+        "data": "hwQQABAAAAAA////////APAREREREREPHxEREREREfEfERERER/x8R8RER/x//HxH/Hx/xEf8fEfHxEfH/Ef8R8fEREfERHxHx8RER8REfEfHx8RH///8R/x//ER8RHxHxEfERERH/EfEREREf//8R8RERERERHx8BEREREREQ8A////////AA==",
+        "mimeType": "image/x-mkcd-f4",
+        "displayName": "roll_until_button"
+    },
+    "image16": {
+        "data": "hwQQABAAAAAAMzMzMzMzADAREREREREDExERERERETETERERERMxMRMRERMxMzExEzExMxETMTETExETEzETMRMTERETERExExMRERMRETETExMREzMzMRMxMzERMRExExETEREREzETERERETMzMRMRERERERExMBEREREREQMAMzMzMzMzAA==",
+        "mimeType": "image/x-mkcd-f4",
+        "displayName": "roll_until_button_selected"
+    },
     "*": {
         "mimeType": "image/x-mkcd-f4",
         "dataEncoding": "base64",

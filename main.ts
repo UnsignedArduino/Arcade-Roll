@@ -51,18 +51,6 @@ function roll_die () {
     }
     info.changeLifeBy(-1)
 }
-function role_dice_multiple (times: number) {
-    rolling_multiple = true
-    cancel_multiple_roll = false
-    for (let index = 0; index < times; index++) {
-        roll_die()
-        pause(20)
-        if (cancel_multiple_roll) {
-            break;
-        }
-    }
-    rolling_multiple = false
-}
 controller.A.onEvent(ControllerButtonEvent.Pressed, function () {
     if (rolling_multiple) {
         cancel_multiple_roll = true
@@ -75,9 +63,21 @@ controller.A.onEvent(ControllerButtonEvent.Pressed, function () {
                 to_roll = game.askForNumber("How many times do you want to roll?", 4)
                 if (to_roll <= info.life()) {
                     make_cancel_rolls_buttons()
-                    role_dice_multiple(to_roll)
+                    role_dice_multiple_times(to_roll)
+                    make_game_buttons()
                 } else {
                     game.showLongText("You can't roll over how many rolls you have left!", DialogLayout.Bottom)
+                }
+            })
+        } else if (selected_side_button == 2) {
+            timer.background(function () {
+                to_roll = game.askForNumber("How much do you want to roll to?", 10)
+                if (to_roll > info.score()) {
+                    make_cancel_rolls_buttons()
+                    role_dice_multiple_until(to_roll)
+                    make_game_buttons()
+                } else {
+                    game.showLongText("You already have that many points!", DialogLayout.Bottom)
                 }
             })
         }
@@ -105,7 +105,7 @@ function make_cancel_rolls_buttons () {
     side_buttons.push(make_button(assets.image`cancel_rolls_button`, assets.image`cancel_rolls_selected_button`, "", "Stop"))
     for (let index = 0; index <= side_buttons.length - 1; index++) {
         side_buttons[index].left = 2
-        side_buttons[index].y = 50 + index * 20
+        side_buttons[index].y = 60 + index * 20
     }
     update_side_buttons()
 }
@@ -115,9 +115,10 @@ function make_game_buttons () {
     selected_side_button = 0
     side_buttons.push(make_button(assets.image`roll_button`, assets.image`roll_button_selected`, "", "Roll"))
     side_buttons.push(make_button(assets.image`roll_x_times_button`, assets.image`roll_x_times_button_selected`, "", "Roll N times"))
+    side_buttons.push(make_button(assets.image`roll_until_button`, assets.image`roll_until_button_selected`, "", "Roll until N points"))
     for (let index = 0; index <= side_buttons.length - 1; index++) {
         side_buttons[index].left = 2
-        side_buttons[index].y = 50 + index * 20
+        side_buttons[index].y = 40 + index * 20
     }
     update_side_buttons()
 }
@@ -127,6 +128,18 @@ function prepare_hud () {
     info.setScore(0)
     scene.setBackgroundColor(13)
     make_game_buttons()
+}
+function role_dice_multiple_times (times: number) {
+    rolling_multiple = true
+    cancel_multiple_roll = false
+    for (let index = 0; index < times; index++) {
+        roll_die()
+        pause(20)
+        if (cancel_multiple_roll) {
+            break;
+        }
+    }
+    rolling_multiple = false
 }
 function make_die () {
     die = []
@@ -172,6 +185,15 @@ controller.down.onEvent(ControllerButtonEvent.Pressed, function () {
         update_side_buttons()
     }
 })
+function role_dice_multiple_until (target: number) {
+    rolling_multiple = true
+    cancel_multiple_roll = false
+    while (info.score() < target && !(cancel_multiple_roll)) {
+        roll_die()
+        pause(20)
+    }
+    rolling_multiple = false
+}
 info.onLifeZero(function () {
     game.over(true)
 })
