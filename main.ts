@@ -41,6 +41,48 @@ controller.up.onEvent(ControllerButtonEvent.Pressed, function () {
         update_side_buttons()
     }
 })
+function roll_die () {
+    for (let dice of die) {
+        dice_data = blockObject.getStoredObject(dice)
+        blockObject.setNumberProperty(dice_data, NumProp.selected, randint(0, 5))
+        info.changeScoreBy(blockObject.getNumberArrayProperty(dice_data, NumArrayProp.values)[blockObject.getNumberProperty(dice_data, NumProp.selected)])
+        dice.setImage(generate_die_side(blockObject.getNumberArrayProperty(dice_data, NumArrayProp.values)[blockObject.getNumberProperty(dice_data, NumProp.selected)]))
+        blockObject.storeOnSprite(dice_data, dice)
+    }
+    info.changeLifeBy(-1)
+}
+function role_dice_multiple (times: number) {
+    rolling_multiple = true
+    cancel_multiple_roll = false
+    for (let index = 0; index < times; index++) {
+        roll_die()
+        pause(20)
+        if (cancel_multiple_roll) {
+            break;
+        }
+    }
+    rolling_multiple = false
+}
+controller.A.onEvent(ControllerButtonEvent.Pressed, function () {
+    if (rolling_multiple) {
+        cancel_multiple_roll = true
+        make_game_buttons()
+    } else {
+        if (selected_side_button == 0) {
+            roll_die()
+        } else if (selected_side_button == 1) {
+            timer.background(function () {
+                to_roll = game.askForNumber("How many times do you want to roll?", 4)
+                if (to_roll <= info.life()) {
+                    make_cancel_rolls_buttons()
+                    role_dice_multiple(to_roll)
+                } else {
+                    game.showLongText("You can't roll over how many rolls you have left!", DialogLayout.Bottom)
+                }
+            })
+        }
+    }
+})
 function make_dice () {
     dice = sprites.create(generate_die_side(1), SpriteKind.Dice)
     dice_data = blockObject.create()
@@ -56,7 +98,19 @@ function make_dice () {
     blockObject.storeOnSprite(dice_data, dice)
     return dice
 }
+function make_cancel_rolls_buttons () {
+    destroy_side_buttons()
+    side_buttons = []
+    selected_side_button = 0
+    side_buttons.push(make_button(assets.image`cancel_rolls_button`, assets.image`cancel_rolls_selected_button`, "", "Stop"))
+    for (let index = 0; index <= side_buttons.length - 1; index++) {
+        side_buttons[index].left = 2
+        side_buttons[index].y = 50 + index * 20
+    }
+    update_side_buttons()
+}
 function make_game_buttons () {
+    destroy_side_buttons()
     side_buttons = []
     selected_side_button = 0
     side_buttons.push(make_button(assets.image`roll_button`, assets.image`roll_button_selected`, "", "Roll"))
@@ -92,6 +146,11 @@ function make_button (image2: Image, selected_image: Image, label: string, hover
     blockObject.storeOnSprite(button_data, button)
     return button
 }
+function destroy_side_buttons () {
+    for (let button of side_buttons) {
+        button.destroy()
+    }
+}
 function generate_die_side (number: number) {
     if (number == 1) {
         return assets.image`die_side_1`
@@ -112,6 +171,9 @@ controller.down.onEvent(ControllerButtonEvent.Pressed, function () {
         selected_side_button += 1
         update_side_buttons()
     }
+})
+info.onLifeZero(function () {
+    game.over(true)
 })
 function place_die () {
     die_per_row = Math.ceil(Math.sqrt(die.length))
@@ -139,13 +201,18 @@ let row_counter = 0
 let die_per_col = 0
 let die_per_row = 0
 let button: Sprite = null
-let die: Sprite[] = []
-let dice_data: blockObject.BlockObject = null
 let dice: Sprite = null
+let to_roll = 0
+let dice_data: blockObject.BlockObject = null
+let die: Sprite[] = []
 let selected_side_button = 0
 let button_data: blockObject.BlockObject = null
 let side_buttons: Sprite[] = []
 let selected_side_label: TextSprite = null
+let cancel_multiple_roll = false
+let rolling_multiple = false
+rolling_multiple = false
+cancel_multiple_roll = false
 stats.turnStats(true)
 prepare_hud()
 make_die()

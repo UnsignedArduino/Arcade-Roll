@@ -59,6 +59,16 @@
         "mimeType": "image/x-mkcd-f4",
         "displayName": "die_side_6"
     },
+    "image13": {
+        "data": "hwQQABAAAAAA////////APAREREREREPHxEREREREfEfERIRESER8R8hIhERIhLxHxEiEiEiEfEfESEiIhIR8R8RESIiERHxHxERIiIREfEfESEiIhIR8R8RIhIhIhHxHyEiEREiEvEfERIRESER8R8RERERERHx8BEREREREQ8A////////AA==",
+        "mimeType": "image/x-mkcd-f4",
+        "displayName": "cancel_rolls_button"
+    },
+    "image14": {
+        "data": "hwQQABAAAAAAMzMzMzMzADAREREREREDExERERERETETERMRETERMRMxMxERMxMxExEzEzEzETETETEzMxMRMRMRETMzERExExERMzMRETETETEzMxMRMRMRMxMxMxExEzEzEREzEzETERMRETERMRMRERERERExMBEREREREQMAMzMzMzMzAA==",
+        "mimeType": "image/x-mkcd-f4",
+        "displayName": "cancel_rolls_selected_button"
+    },
     "*": {
         "mimeType": "image/x-mkcd-f4",
         "dataEncoding": "base64",
