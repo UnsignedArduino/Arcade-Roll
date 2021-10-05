@@ -24,6 +24,41 @@
         "mimeType": "image/x-mkcd-f4",
         "displayName": "roll_x_times_button_selected"
     },
+    "image6": {
+        "data": "hwQQABAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
+        "mimeType": "image/x-mkcd-f4",
+        "displayName": "sixteen"
+    },
+    "image7": {
+        "data": "hwQQABAAAAAA////////APAREREREREPHxEREREREfEfERERERER8R8RERERERHxHxEREREREfEfERHxHxER8R8REf//ERHxHxER//8REfEfERHxHxER8R8RERERERHxHxEREREREfEfERERERER8R8RERERERHx8BEREREREQ8A////////AA==",
+        "mimeType": "image/x-mkcd-f4",
+        "displayName": "die_side_1"
+    },
+    "image8": {
+        "data": "hwQQABAAAAAA////////APAREREREREPHxEREREREfEfERERERER8R8R/xERERHxHxH/EREREfEfERERERER8R8RERERERHxHxEREREREfEfERERERER8R8RERER/xHxHxERERH/EfEfERERERER8R8RERERERHx8BEREREREQ8A////////AA==",
+        "mimeType": "image/x-mkcd-f4",
+        "displayName": "die_side_2"
+    },
+    "image9": {
+        "data": "hwQQABAAAAAA////////APAREREREREPHxEREREREfEfEREREfEf8R8RERER8R/xHxEREREREfEfERERERER8R8REfEfERHxHxER8R8REfEfERERERER8R8RERERERHxH/EfEREREfEf8R8RERER8R8RERERERHx8BEREREREQ8A////////AA==",
+        "mimeType": "image/x-mkcd-f4",
+        "displayName": "die_side_3"
+    },
+    "image10": {
+        "data": "hwQQABAAAAAA////////APAREREREREPHxEREREREfEfERERERER8R8R/xER/xHxHxH/ERH/EfEfERERERER8R8RERERERHxHxEREREREfEfERERERER8R8R/xER/xHxHxH/ERH/EfEfERERERER8R8RERERERHx8BEREREREQ8A////////AA==",
+        "mimeType": "image/x-mkcd-f4",
+        "displayName": "die_side_4"
+    },
+    "image11": {
+        "data": "hwQQABAAAAAA////////APAREREREREPHxEREREREfEf8R8REfEf8R/xHxER8R/xHxEREREREfEfERERERER8R8REfEfERHxHxER8R8REfEfERERERER8R8RERERERHxH/EfERHxH/Ef8R8REfEf8R8RERERERHx8BEREREREQ8A////////AA==",
+        "mimeType": "image/x-mkcd-f4",
+        "displayName": "die_side_5"
+    },
+    "image12": {
+        "data": "hwQQABAAAAAA////////APAREREREREPHxEREREREfEf8R/xH/Ef8R/xH/Ef8R/xHxEREREREfEfERERERER8R8RERERERHxHxEREREREfEfERERERER8R8RERERERHxH/Ef8R/xH/Ef8R/xH/Ef8R8RERERERHx8BEREREREQ8A////////AA==",
+        "mimeType": "image/x-mkcd-f4",
+        "displayName": "die_side_6"
+    },
     "*": {
         "mimeType": "image/x-mkcd-f4",
         "dataEncoding": "base64",
