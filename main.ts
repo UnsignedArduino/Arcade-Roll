@@ -115,25 +115,28 @@ controller.down.onEvent(ControllerButtonEvent.Pressed, function () {
 })
 function place_die () {
     die_per_row = Math.ceil(Math.sqrt(die.length))
+    die_per_col = Math.ceil(die.length / die_per_row)
     row_counter = 0
-    original_x = scene.screenWidth() / 2 - die_per_row * 20 / 4
-    curr_x = original_x
-    curr_y = scene.screenHeight() / 2 - Math.ceil(die.length / die_per_row) * 20 / 4
+    orign_left = scene.screenWidth() / 2 - die_per_row * 18 / 2
+    curr_left = orign_left
+    curr_top = scene.screenHeight() / 2 - die_per_col * 18 / 2
     for (let dice of die) {
-        dice.setPosition(curr_x, curr_y)
-        curr_x += 20
+        dice.left = curr_left
+        dice.top = curr_top
+        curr_left += 18
         row_counter += 1
         if (row_counter == die_per_row) {
             row_counter = 0
-            curr_x = original_x
-            curr_y += 20
+            curr_left = orign_left
+            curr_top += 18
         }
     }
 }
-let curr_y = 0
-let curr_x = 0
-let original_x = 0
+let curr_top = 0
+let curr_left = 0
+let orign_left = 0
 let row_counter = 0
+let die_per_col = 0
 let die_per_row = 0
 let button: Sprite = null
 let die: Sprite[] = []
@@ -143,5 +146,6 @@ let selected_side_button = 0
 let button_data: blockObject.BlockObject = null
 let side_buttons: Sprite[] = []
 let selected_side_label: TextSprite = null
+stats.turnStats(true)
 prepare_hud()
 make_die()
