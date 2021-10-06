@@ -181,6 +181,7 @@ function generate_die_side (number: number) {
         die_image = assets.image`unlabeled_die_side`
         if (!(temp_sprite)) {
             temp_sprite = textsprite.create("", 0, 15)
+            temp_sprite.setFlag(SpriteFlag.Invisible, true)
         }
         temp_sprite.setText("" + number)
         temp_sprite.setMaxFontHeight(5)
