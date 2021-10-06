@@ -175,8 +175,17 @@ function generate_die_side (number: number) {
         return assets.image`die_side_4`
     } else if (number == 5) {
         return assets.image`die_side_5`
-    } else {
+    } else if (number == 6) {
         return assets.image`die_side_6`
+    } else {
+        die_image = assets.image`unlabeled_die_side`
+        if (!(temp_sprite)) {
+            temp_sprite = textsprite.create("", 0, 15)
+        }
+        temp_sprite.setText("" + number)
+        temp_sprite.setMaxFontHeight(5)
+        spriteutils.drawTransparentImage(temp_sprite.image, die_image, 3, 5)
+        return die_image.clone()
     }
 }
 controller.down.onEvent(ControllerButtonEvent.Pressed, function () {
@@ -222,6 +231,8 @@ let orign_left = 0
 let row_counter = 0
 let die_per_col = 0
 let die_per_row = 0
+let temp_sprite: TextSprite = null
+let die_image: Image = null
 let button: Sprite = null
 let dice: Sprite = null
 let to_roll = 0

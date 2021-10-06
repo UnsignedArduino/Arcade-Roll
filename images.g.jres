@@ -79,6 +79,11 @@
         "mimeType": "image/x-mkcd-f4",
         "displayName": "roll_until_button_selected"
     },
+    "image17": {
+        "data": "hwQQABAAAAAA////////APAREREREREPHxEREREREfEfERERERER8R8RERERERHxHxEREREREfEfERERERER8R8RERERERHxHxEREREREfEfERERERER8R8RERERERHxHxEREREREfEfERERERER8R8RERERERHx8BEREREREQ8A////////AA==",
+        "mimeType": "image/x-mkcd-f4",
+        "displayName": "unlabeled_die_side"
+    },
     "*": {
         "mimeType": "image/x-mkcd-f4",
         "dataEncoding": "base64",
