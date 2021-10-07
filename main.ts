@@ -51,38 +51,37 @@ function roll_die () {
     }
     info.changeLifeBy(-1)
 }
+function cancel_rolling () {
+    cancel_multiple_roll = true
+    make_game_buttons()
+}
 controller.A.onEvent(ControllerButtonEvent.Pressed, function () {
     if (rolling_multiple) {
-        cancel_multiple_roll = true
-        make_game_buttons()
+        cancel_rolling()
+    } else if (in_shop) {
+        if (selected_side_button == 0) {
+            hide_shop()
+        }
     } else {
         if (selected_side_button == 0) {
             roll_die()
         } else if (selected_side_button == 1) {
             timer.background(function () {
-                to_roll = game.askForNumber("How many times do you want to roll?", 4)
-                if (to_roll <= info.life()) {
-                    make_cancel_rolls_buttons()
-                    role_dice_multiple_times(to_roll)
-                    make_game_buttons()
-                } else {
-                    game.showLongText("You can't roll over how many rolls you have left!", DialogLayout.Bottom)
-                }
+                ask_roll_dice_multiple_times()
             })
         } else if (selected_side_button == 2) {
             timer.background(function () {
-                to_roll = game.askForNumber("How much do you want to roll to?", 10)
-                if (to_roll > info.score()) {
-                    make_cancel_rolls_buttons()
-                    role_dice_multiple_until(to_roll)
-                    make_game_buttons()
-                } else {
-                    game.showLongText("You already have that many points!", DialogLayout.Bottom)
-                }
+                ask_roll_dice_until()
             })
+        } else if (selected_side_button == 3) {
+            show_shop()
         }
     }
 })
+function show_shop () {
+    make_shop_buttons()
+    show_dice(false)
+}
 function make_dice () {
     dice = sprites.create(generate_die_side(1), SpriteKind.Dice)
     dice_data = blockObject.create()
@@ -105,7 +104,7 @@ function make_cancel_rolls_buttons () {
     side_buttons.push(make_button(assets.image`cancel_rolls_button`, assets.image`cancel_rolls_selected_button`, "", "Stop"))
     for (let index = 0; index <= side_buttons.length - 1; index++) {
         side_buttons[index].left = 2
-        side_buttons[index].y = 60 + index * 20
+        side_buttons[index].y = scene.screenHeight() / 2 - (side_buttons.length - 1) * 10 + index * 20
     }
     update_side_buttons()
 }
@@ -116,9 +115,10 @@ function make_game_buttons () {
     side_buttons.push(make_button(assets.image`roll_button`, assets.image`roll_button_selected`, "", "Roll"))
     side_buttons.push(make_button(assets.image`roll_x_times_button`, assets.image`roll_x_times_button_selected`, "", "Roll N times"))
     side_buttons.push(make_button(assets.image`roll_until_button`, assets.image`roll_until_button_selected`, "", "Roll until N points"))
+    side_buttons.push(make_button(assets.image`shop_button`, assets.image`shop_button_selected`, "", "Shop"))
     for (let index = 0; index <= side_buttons.length - 1; index++) {
         side_buttons[index].left = 2
-        side_buttons[index].y = 40 + index * 20
+        side_buttons[index].y = scene.screenHeight() / 2 - (side_buttons.length - 1) * 10 + index * 20
     }
     update_side_buttons()
 }
@@ -189,12 +189,37 @@ function generate_die_side (number: number) {
         return die_image.clone()
     }
 }
+function show_dice (show: boolean) {
+    for (let dice of die) {
+        dice.setFlag(SpriteFlag.Invisible, !(show))
+    }
+}
+function ask_roll_dice_until () {
+    to_roll = game.askForNumber("How much do you want to roll to?", 10)
+    if (to_roll > info.score()) {
+        make_cancel_rolls_buttons()
+        role_dice_multiple_until(to_roll)
+        make_game_buttons()
+    } else {
+        game.showLongText("You already have that many points!", DialogLayout.Bottom)
+    }
+}
 controller.down.onEvent(ControllerButtonEvent.Pressed, function () {
     if (selected_side_button < side_buttons.length - 1) {
         selected_side_button += 1
         update_side_buttons()
     }
 })
+function ask_roll_dice_multiple_times () {
+    to_roll = game.askForNumber("How many times do you want to roll?", 4)
+    if (to_roll <= info.life()) {
+        make_cancel_rolls_buttons()
+        role_dice_multiple_times(to_roll)
+        make_game_buttons()
+    } else {
+        game.showLongText("You can't roll over how many rolls you have left!", DialogLayout.Bottom)
+    }
+}
 function role_dice_multiple_until (target: number) {
     rolling_multiple = true
     cancel_multiple_roll = false
@@ -207,6 +232,11 @@ function role_dice_multiple_until (target: number) {
 info.onLifeZero(function () {
     game.over(true)
 })
+function hide_shop () {
+    in_shop = false
+    make_game_buttons()
+    show_dice(true)
+}
 function place_die () {
     die_per_row = Math.ceil(Math.sqrt(die.length))
     die_per_col = Math.ceil(die.length / die_per_row)
@@ -226,27 +256,41 @@ function place_die () {
         }
     }
 }
+function make_shop_buttons () {
+    in_shop = true
+    destroy_side_buttons()
+    side_buttons = []
+    selected_side_button = 0
+    side_buttons.push(make_button(assets.image`exit_shop_button`, assets.image`exit_shop_button_selected`, "", "Exit shop"))
+    for (let index = 0; index <= side_buttons.length - 1; index++) {
+        side_buttons[index].left = 2
+        side_buttons[index].y = scene.screenHeight() / 2 - (side_buttons.length - 1) * 10 + index * 20
+    }
+    update_side_buttons()
+}
 let curr_top = 0
 let curr_left = 0
 let orign_left = 0
 let row_counter = 0
 let die_per_col = 0
 let die_per_row = 0
+let to_roll = 0
 let temp_sprite: TextSprite = null
 let die_image: Image = null
 let button: Sprite = null
 let dice: Sprite = null
-let to_roll = 0
 let dice_data: blockObject.BlockObject = null
 let die: Sprite[] = []
 let selected_side_button = 0
 let button_data: blockObject.BlockObject = null
 let side_buttons: Sprite[] = []
 let selected_side_label: TextSprite = null
+let in_shop = false
 let cancel_multiple_roll = false
 let rolling_multiple = false
 rolling_multiple = false
 cancel_multiple_roll = false
+in_shop = false
 stats.turnStats(true)
 prepare_hud()
 make_die()

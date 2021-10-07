@@ -84,6 +84,26 @@
         "mimeType": "image/x-mkcd-f4",
         "displayName": "unlabeled_die_side"
     },
+    "image18": {
+        "data": "hwQQABAAAAAA////////APAREREREREPHxEREREREfEfERERERER8R8R8f///x/xH/H/////H/Ef8fH///8f8R/x8f///x/xH/Hx////H/Ef8fH///8f8R/x/////x/xHxHx////H/EfERERERER8R8RERERERHx8BEREREREQ8A////////AA==",
+        "mimeType": "image/x-mkcd-f4",
+        "displayName": "shop_button"
+    },
+    "image19": {
+        "data": "hwQQABAAAAAAMzMzMzMzADAREREREREDExERERERETETERERERERMRMRMTMzMxMxEzEzMzMzEzETMTEzMzMTMRMxMTMzMxMxEzExMzMzEzETMTEzMzMTMRMxMzMzMxMxExExMzMzEzETERERERERMRMRERERERExMBEREREREQMAMzMzMzMzAA==",
+        "mimeType": "image/x-mkcd-f4",
+        "displayName": "shop_button_selected"
+    },
+    "image20": {
+        "data": "hwQQABAAAAAA////////APAREREREREPHxEREREREfEfERHxHxER8R8REf//ERHxHxHx//8fEfEfEf////8R8R8REfEfERHxHxER8R8REfEfERHxHxER8R8REfEfERHxHxER8R8REfEfERHxHxER8R8RERERERHx8BEREREREQ8A////////AA==",
+        "mimeType": "image/x-mkcd-f4",
+        "displayName": "exit_shop_button"
+    },
+    "image21": {
+        "data": "hwQQABAAAAAAMzMzMzMzADAREREREREDExERERERETETERExExERMRMRETMzERExExExMzMTETETETMzMzMRMRMRETETERExExERMRMRETETERExExERMRMRETETERExExERMRMRETETERExExERMRMRERERERExMBEREREREQMAMzMzMzMzAA==",
+        "mimeType": "image/x-mkcd-f4",
+        "displayName": "exit_shop_button_selected"
+    },
     "*": {
         "mimeType": "image/x-mkcd-f4",
         "dataEncoding": "base64",
