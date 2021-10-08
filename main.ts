@@ -233,6 +233,13 @@ function role_dice_multiple_until (target: number) {
 info.onLifeZero(function () {
     game.over(true)
 })
+controller.A.onEvent(ControllerButtonEvent.Repeated, function () {
+    if (!(rolling_multiple) && !(in_shop)) {
+        if (selected_side_button == 0) {
+            roll_die()
+        }
+    }
+})
 function hide_shop () {
     in_shop = false
     make_game_buttons()
@@ -293,5 +300,6 @@ rolling_multiple = false
 cancel_multiple_roll = false
 in_shop = false
 stats.turnStats(true)
+controller.configureRepeatEventDefaults(1000, 50)
 prepare_hud()
 make_die()
