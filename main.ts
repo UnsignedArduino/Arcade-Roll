@@ -55,6 +55,16 @@ function cancel_rolling () {
     cancel_multiple_roll = true
     make_game_buttons()
 }
+function print_small_num_to_img (image2: Image, number: number, x: number, y: number) {
+    if (!(temp_sprite)) {
+        temp_sprite = textsprite.create("", 0, 15)
+        temp_sprite.setFlag(SpriteFlag.Invisible, true)
+        temp_sprite.setMaxFontHeight(5)
+    }
+    temp_sprite.setText("" + number)
+    spriteutils.drawTransparentImage(temp_sprite.image, image2, x, y)
+    return image2
+}
 controller.A.onEvent(ControllerButtonEvent.Pressed, function () {
     if (rolling_multiple) {
         cancel_rolling()
@@ -179,15 +189,7 @@ function generate_die_side (number: number) {
     } else if (number == 6) {
         return assets.image`die_side_6`
     } else {
-        die_image = assets.image`unlabeled_die_side`
-        if (!(temp_sprite)) {
-            temp_sprite = textsprite.create("", 0, 15)
-            temp_sprite.setFlag(SpriteFlag.Invisible, true)
-        }
-        temp_sprite.setText("" + number)
-        temp_sprite.setMaxFontHeight(5)
-        spriteutils.drawTransparentImage(temp_sprite.image, die_image, 3, 5)
-        return die_image.clone()
+        return print_small_num_to_img(assets.image`unlabeled_die_side`.clone(), number, 3, 5)
     }
 }
 function show_dice (show: boolean) {
@@ -283,10 +285,9 @@ let row_counter = 0
 let die_per_col = 0
 let die_per_row = 0
 let to_roll = 0
-let temp_sprite: TextSprite = null
-let die_image: Image = null
 let button: Sprite = null
 let dice: Sprite = null
+let temp_sprite: TextSprite = null
 let dice_data: blockObject.BlockObject = null
 let die: Sprite[] = []
 let selected_side_button = 0
