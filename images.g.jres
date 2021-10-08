@@ -104,6 +104,26 @@
         "mimeType": "image/x-mkcd-f4",
         "displayName": "exit_shop_button_selected"
     },
+    "image22": {
+        "data": "hwQQABAAAAAA////////APAREREREREPHxER////EfEfEf////8R8R8RH////xHxHxEf////EfEfEf////8R8R8REf///xHxHxEREREREfEfEREfERER8R8R8R8RERHxHxH/////EfEfEfEfERER8R8RER8RERHx8BEREREREQ8A////////AA==",
+        "mimeType": "image/x-mkcd-f4",
+        "displayName": "upgrade_shop_button"
+    },
+    "image23": {
+        "data": "hwQQABAAAAAAMzMzMzMzADAREREREREDExERMzMzETETETMzMzMRMRMREzMzMxExExETMzMzETETETMzMzMRMRMRETMzMxExExERERERETETERETERERMRMRMRMRERExExEzMzMzETETETETERERMRMRERMRERExMBEREREREQMAMzMzMzMzAA==",
+        "mimeType": "image/x-mkcd-f4",
+        "displayName": "upgrade_shop_selected_button"
+    },
+    "image24": {
+        "data": "hwQQABAAAAAA////////APAREREREREPHxERHxEREfEf8fH/ERER8R8fER8fERHxHx8RER8REfEfHxERHxER8R8fHxEfERHxH/H/8REREfEfER8R8f8f8R8REfH//x/xHxER8fH/H/EfERHx//8f8R8RERHx/x/x8BEREREREQ8A////////AA==",
+        "mimeType": "image/x-mkcd-f4",
+        "displayName": "reroll_shop_button"
+    },
+    "image25": {
+        "data": "hwQQABAAAAAAMzMzMzMzADAREREREREDExERExERETETMTEzERERMRMTERMTERExExMRERMRETETExERExERMRMTExETERExEzEzMRERETETERMRMTMTMRMRETEzMxMxExERMTEzEzETERExMzMTMRMRERExMxMxMBEREREREQMAMzMzMzMzAA==",
+        "mimeType": "image/x-mkcd-f4",
+        "displayName": "reroll_shop_button_selected"
+    },
     "*": {
         "mimeType": "image/x-mkcd-f4",
         "dataEncoding": "base64",

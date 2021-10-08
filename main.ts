@@ -79,6 +79,7 @@ controller.A.onEvent(ControllerButtonEvent.Pressed, function () {
     }
 })
 function show_shop () {
+    in_shop = true
     make_shop_buttons()
     show_dice(false)
 }
@@ -99,9 +100,8 @@ function make_dice () {
 }
 function make_cancel_rolls_buttons () {
     destroy_side_buttons()
-    side_buttons = []
+    side_buttons = [make_button(assets.image`cancel_rolls_button`, assets.image`cancel_rolls_selected_button`, "", "Stop")]
     selected_side_button = 0
-    side_buttons.push(make_button(assets.image`cancel_rolls_button`, assets.image`cancel_rolls_selected_button`, "", "Stop"))
     for (let index = 0; index <= side_buttons.length - 1; index++) {
         side_buttons[index].left = 2
         side_buttons[index].y = scene.screenHeight() / 2 - (side_buttons.length - 1) * 10 + index * 20
@@ -110,12 +110,13 @@ function make_cancel_rolls_buttons () {
 }
 function make_game_buttons () {
     destroy_side_buttons()
-    side_buttons = []
+    side_buttons = [
+    make_button(assets.image`roll_button`, assets.image`roll_button_selected`, "", "Roll"),
+    make_button(assets.image`roll_x_times_button`, assets.image`roll_x_times_button_selected`, "", "Roll N times"),
+    make_button(assets.image`roll_until_button`, assets.image`roll_until_button_selected`, "", "Roll until N points"),
+    make_button(assets.image`shop_button`, assets.image`shop_button_selected`, "", "Shop")
+    ]
     selected_side_button = 0
-    side_buttons.push(make_button(assets.image`roll_button`, assets.image`roll_button_selected`, "", "Roll"))
-    side_buttons.push(make_button(assets.image`roll_x_times_button`, assets.image`roll_x_times_button_selected`, "", "Roll N times"))
-    side_buttons.push(make_button(assets.image`roll_until_button`, assets.image`roll_until_button_selected`, "", "Roll until N points"))
-    side_buttons.push(make_button(assets.image`shop_button`, assets.image`shop_button_selected`, "", "Shop"))
     for (let index = 0; index <= side_buttons.length - 1; index++) {
         side_buttons[index].left = 2
         side_buttons[index].y = scene.screenHeight() / 2 - (side_buttons.length - 1) * 10 + index * 20
@@ -257,11 +258,11 @@ function place_die () {
     }
 }
 function make_shop_buttons () {
-    in_shop = true
     destroy_side_buttons()
-    side_buttons = []
+    side_buttons = [make_button(assets.image`exit_shop_button`, assets.image`exit_shop_button_selected`, "", "Exit shop")]
     selected_side_button = 0
-    side_buttons.push(make_button(assets.image`exit_shop_button`, assets.image`exit_shop_button_selected`, "", "Exit shop"))
+    side_buttons.push(make_button(assets.image`upgrade_shop_button`, assets.image`upgrade_shop_selected_button`, "", "Upgrade shop"))
+    side_buttons.push(make_button(assets.image`reroll_shop_button`, assets.image`reroll_shop_button_selected`, "", "Re-roll shop"))
     for (let index = 0; index <= side_buttons.length - 1; index++) {
         side_buttons[index].left = 2
         side_buttons[index].y = scene.screenHeight() / 2 - (side_buttons.length - 1) * 10 + index * 20
