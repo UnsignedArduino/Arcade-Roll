@@ -44,7 +44,7 @@ controller.up.onEvent(ControllerButtonEvent.Pressed, function () {
 function roll_die () {
     for (let dice of die) {
         dice_data = blockObject.getStoredObject(dice)
-        blockObject.setNumberProperty(dice_data, NumProp.selected, randint(0, 5))
+        blockObject.setNumberProperty(dice_data, NumProp.selected, randint(0, blockObject.getNumberArrayProperty(dice_data, NumArrayProp.values).length - 1))
         info.changeScoreBy(blockObject.getNumberArrayProperty(dice_data, NumArrayProp.values)[blockObject.getNumberProperty(dice_data, NumProp.selected)])
         dice.setImage(generate_die_side(blockObject.getNumberArrayProperty(dice_data, NumArrayProp.values)[blockObject.getNumberProperty(dice_data, NumProp.selected)]))
         blockObject.storeOnSprite(dice_data, dice)
