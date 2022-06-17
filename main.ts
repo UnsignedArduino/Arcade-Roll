@@ -26,9 +26,12 @@ function update_side_buttons () {
     if (!(spriteutils.isDestroyed(selected_side_label))) {
         selected_side_label.destroy()
     }
+    if (!(spriteutils.isDestroyed(selected_grid_label))) {
+        selected_grid_label.destroy()
+    }
     for (let index = 0; index <= side_buttons.length - 1; index++) {
         button_data = blockObject.getStoredObject(side_buttons[index])
-        if (selected_side_button == index) {
+        if (selected_side_button == index && !(on_grid_buttons)) {
             side_buttons[index].setImage(blockObject.getImageProperty(button_data, ImageProp.selected))
             side_buttons[index].left = 4
             selected_side_label = textsprite.create(blockObject.getStringProperty(button_data, StrProp.hover), 0, 3)
@@ -195,6 +198,26 @@ function make_button (image2: Image, selected_image: Image, label: string, hover
     blockObject.storeOnSprite(button_data, button)
     return button
 }
+function update_grid_buttons () {
+    if (!(spriteutils.isDestroyed(selected_side_label))) {
+        selected_side_label.destroy()
+    }
+    if (!(spriteutils.isDestroyed(selected_grid_label))) {
+        selected_grid_label.destroy()
+    }
+    for (let index = 0; index <= grid_buttons.length - 1; index++) {
+        button_data = blockObject.getStoredObject(grid_buttons[index])
+        if (selected_grid_button == index && on_grid_buttons) {
+            grid_buttons[index].setImage(blockObject.getImageProperty(button_data, ImageProp.selected))
+            selected_grid_label = textsprite.create(blockObject.getStringProperty(button_data, StrProp.hover), 0, 3)
+            selected_grid_label.y = grid_buttons[index].y
+            selected_grid_label.left = grid_buttons[index].right + 2
+            selected_grid_label.z = 20
+        } else {
+            grid_buttons[index].setImage(blockObject.getImageProperty(button_data, ImageProp.image))
+        }
+    }
+}
 function destroy_side_buttons () {
     for (let button of side_buttons) {
         button.destroy()
@@ -235,6 +258,7 @@ function make_shop_upgrade_buttons () {
         blockObject.storeOnSprite(upgrade, grid_buttons[grid_buttons.length - 1])
     }
     place_grid_buttons()
+    update_grid_buttons()
 }
 function show_dice (show: boolean) {
     for (let dice of die) {
@@ -375,14 +399,16 @@ let die: Sprite[] = []
 let selected_side_button = 0
 let button_data: blockObject.BlockObject = null
 let side_buttons: Sprite[] = []
+let selected_grid_label: TextSprite = null
 let selected_side_label: TextSprite = null
+let on_grid_buttons = false
 let in_shop = false
 let cancel_multiple_roll = false
 let rolling_multiple = false
 rolling_multiple = false
 cancel_multiple_roll = false
 in_shop = false
-let on_grid_buttons = false
+on_grid_buttons = false
 stats.turnStats(true)
 controller.configureRepeatEventDefaults(1000, 50)
 prepare_hud()
