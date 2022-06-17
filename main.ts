@@ -4,9 +4,15 @@ namespace SpriteKind {
 }
 namespace NumProp {
     export const selected = NumProp.create()
+    export const upgrade_type = NumProp.create()
+    export const upgrade_variant = NumProp.create()
+    export const upgrade_cost = NumProp.create()
 }
 namespace NumArrayProp {
     export const values = NumArrayProp.create()
+}
+namespace BoolProp {
+    export const upgrade_bought = BoolProp.create()
 }
 namespace StrProp {
     export const label = StrProp.create()
@@ -16,21 +22,6 @@ namespace ImageProp {
     export const image = ImageProp.create()
     export const selected = ImageProp.create()
 }
-/**
- * Types of upgrades:
- * 
- * 0: Buy more dice (+1 to +5)
- * 
- *     cost: (100 + 10%) * dice
- * 
- * 1: Increment all die's sides (+1 to +10)
- * 
- *     cost: (200 + 10%) * (increment * 100)
- * 
- * 2: Multiply all die's sides (2x to 5x)
- * 
- *     cost: (500 + 20%) * (multiply * 300)
- */
 function update_side_buttons () {
     if (!(spriteutils.isDestroyed(selected_side_label))) {
         selected_side_label.destroy()
@@ -281,10 +272,39 @@ function place_die () {
         }
     }
 }
+/**
+ * Types of upgrades:
+ * 
+ * 1: Increment all die's sides (+1 to +10)
+ * 
+ *     cost: (200 + 10%) + (increment * 5%)
+ * 
+ * 2: Multiply all die's sides (2x to 5x)
+ * 
+ *     cost: (500 + 20%) + (multiply * 10%)
+ * 
+ * 0: Buy more dice (+1 to +5)
+ * 
+ *     cost: (100 + 10%) * dice
+ */
 function generate_shop_upgrades () {
     shop_upgrades = []
     for (let index = 0; index < 12; index++) {
-    	
+        randint2 = randint(0, 2)
+        upgrade_data = blockObject.create()
+        blockObject.setNumberProperty(upgrade_data, NumProp.upgrade_type, randint2)
+        blockObject.setBooleanProperty(upgrade_data, BoolProp.upgrade_bought, false)
+        if (randint2 == 1) {
+            blockObject.setNumberProperty(upgrade_data, NumProp.upgrade_variant, randint(1, 10))
+            blockObject.setNumberProperty(upgrade_data, NumProp.upgrade_cost, Math.round(200 + info.score() * 0.1 + blockObject.getNumberProperty(upgrade_data, NumProp.upgrade_variant) * (info.score() * 0.05)))
+        } else if (randint2 == 2) {
+            blockObject.setNumberProperty(upgrade_data, NumProp.upgrade_variant, randint(2, 5))
+            blockObject.setNumberProperty(upgrade_data, NumProp.upgrade_cost, Math.round(500 + info.score() * 0.2 + blockObject.getNumberProperty(upgrade_data, NumProp.upgrade_variant) * (info.score() * 0.1)))
+        } else {
+            blockObject.setNumberProperty(upgrade_data, NumProp.upgrade_variant, randint(1, 5))
+            blockObject.setNumberProperty(upgrade_data, NumProp.upgrade_cost, Math.round((100 + info.score() * 0.1) * blockObject.getNumberProperty(upgrade_data, NumProp.upgrade_variant)))
+        }
+        shop_upgrades.push(upgrade_data)
     }
 }
 function make_shop_buttons () {
@@ -299,7 +319,9 @@ function make_shop_buttons () {
     }
     update_side_buttons()
 }
-let shop_upgrades: number[] = []
+let upgrade_data: blockObject.BlockObject = null
+let randint2 = 0
+let shop_upgrades: blockObject.BlockObject[] = []
 let curr_top = 0
 let curr_left = 0
 let orign_left = 0
