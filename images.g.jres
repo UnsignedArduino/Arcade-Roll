@@ -124,6 +124,46 @@
         "mimeType": "image/x-mkcd-f4",
         "displayName": "reroll_shop_button_selected"
     },
+    "image26": {
+        "data": "hwQQABAAAAAA////////APAREREREREPHxEREREREfEfERER8f8R8R8RHxEfER/xH/H/ER8fH/EfER8RHxEf8R8RERHx/xHxHxEREREREfEf8f8fER8R8R8RHxHx/xHxHxHxEREfEfEf8f8f/x8R8R8RERERERHx8BEREREREQ8A////////AA==",
+        "mimeType": "image/x-mkcd-f4",
+        "displayName": "increment_die_upgrade_button"
+    },
+    "image27": {
+        "data": "hwQQABAAAAAAMzMzMzMzADAREREREREDExERERERETETERERMTMRMRMRExETERMxEzEzERMTEzETERMRExETMRMRERExMxExExERERERETETMTMTERMRMRMRExExMxExExExERETETETMTMTMxMRMRMRERERERExMBEREREREQMAMzMzMzMzAA==",
+        "mimeType": "image/x-mkcd-f4",
+        "displayName": "increment_die_upgrade_button_hover"
+    },
+    "image28": {
+        "data": "hwQQABAAAAAA////////APAREREREREPHxEREREREfEfERER8f8R8R/x8REfER/xHxEfER8fH/Ef8fERHxEf8R8RERHx/xHxHxEREREREfEf8f8fER8R8R8RHxHx/xHxHxHxEREfEfEf8f8f/x8R8R8RERERERHx8BEREREREQ8A////////AA==",
+        "mimeType": "image/x-mkcd-f4",
+        "displayName": "multiply_die_upgrade_button"
+    },
+    "image29": {
+        "data": "hwQQABAAAAAAMzMzMzMzADAREREREREDExERERERETETERERMTMRMRMxMRETERMxExETERMTEzETMTERExETMRMRERExMxExExERERERETETMTMTERMRMRMRExExMxExExExERETETETMTMTMxMRMRMRERERERExMBEREREREQMAMzMzMzMzAA==",
+        "mimeType": "image/x-mkcd-f4",
+        "displayName": "multiply_die_upgrade_button_hover"
+    },
+    "image30": {
+        "data": "hwQQABAAAAAA////////APAREREREREPHxEREREREfEfERER8f8R8R8RHxEfER/xH/H/ER8fH/EfER8RHxEf8R8RERHx/xHxHxEREREREfEf8f8fERER8R8RHxERERHxHxHxEREREfEf8f8fERER8R8RERERERHx8BEREREREQ8A////////AA==",
+        "mimeType": "image/x-mkcd-f4",
+        "displayName": "add_die_upgrade_button"
+    },
+    "image31": {
+        "data": "hwQQABAAAAAAMzMzMzMzADAREREREREDExERERERETETERERMTMRMRMRExETERMxEzEzERMTEzETERMRExETMRMRERExMxExExERERERETETMTMTERERMRMRExERERExExExERERETETMTMTERERMRMRERERERExMBEREREREQMAMzMzMzMzAA==",
+        "mimeType": "image/x-mkcd-f4",
+        "displayName": "add_die_upgrade_button_hover"
+    },
+    "image33": {
+        "data": "hwQQABAAAAAAMzMzMzMzADAREREREREDExERERERETETERMRETERMRMxMxERMxMxExEzEzEzETETETEzMxMRMRMRETMzERExExERMzMRETETETEzMxMRMRMRMxMxMxExEzEzEREzEzETERMRETERMRMRERERERExMBEREREREQMAMzMzMzMzAA==",
+        "mimeType": "image/x-mkcd-f4",
+        "displayName": "upgrade_already_bought_button_hover"
+    },
+    "image32": {
+        "data": "hwQQABAAAAAA////////APAREREREREPHxEREREREfEfER8REfER8R/x/xER/x/xHxH/H/H/EfEfEfH//x8R8R8REf//ERHxHxER//8REfEfEfH//x8R8R8R/x/x/xHxH/H/ERH/H/EfER8REfER8R8RERERERHx8BEREREREQ8A////////AA==",
+        "mimeType": "image/x-mkcd-f4",
+        "displayName": "upgrade_already_bought_button"
+    },
     "*": {
         "mimeType": "image/x-mkcd-f4",
         "dataEncoding": "base64",

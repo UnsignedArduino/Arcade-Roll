@@ -198,6 +198,24 @@ function generate_die_side (number: number) {
         return print_small_num_to_img(assets.image`unlabeled_die_side`.clone(), number, 3, 5)
     }
 }
+function make_shop_upgrade_buttons () {
+    grid_buttons = []
+    selected_grid_button = 0
+    for (let upgrade of shop_upgrades) {
+        if (blockObject.getBooleanProperty(upgrade, BoolProp.upgrade_bought)) {
+            grid_buttons.push(make_button(assets.image`upgrade_already_bought_button`, assets.image`upgrade_already_bought_button_hover`, "", "Upgrade already bought!"))
+        } else {
+            if (blockObject.getNumberProperty(upgrade, NumProp.upgrade_type) == 1) {
+                grid_buttons.push(make_button(assets.image`increment_die_upgrade_button`, assets.image`increment_die_upgrade_button_hover`, "", "Increment all sides of a die by " + blockObject.getNumberProperty(upgrade, NumProp.upgrade_variant) + " for $" + blockObject.getNumberProperty(upgrade, NumProp.upgrade_cost)))
+            } else if (blockObject.getNumberProperty(upgrade, NumProp.upgrade_type) == 1) {
+                grid_buttons.push(make_button(assets.image`multiply_die_upgrade_button`, assets.image`multiply_die_upgrade_button_hover`, "", "Multiply all sides of a die by " + blockObject.getNumberProperty(upgrade, NumProp.upgrade_variant) + " for $" + blockObject.getNumberProperty(upgrade, NumProp.upgrade_cost)))
+            } else {
+                grid_buttons.push(make_button(assets.image`add_die_upgrade_button`, assets.image`add_die_upgrade_button_hover`, "", "Add " + blockObject.getNumberProperty(upgrade, NumProp.upgrade_variant) + " dice for $" + blockObject.getNumberProperty(upgrade, NumProp.upgrade_cost)))
+            }
+        }
+        blockObject.storeOnSprite(upgrade, grid_buttons[grid_buttons.length - 1])
+    }
+}
 function show_dice (show: boolean) {
     for (let dice of die) {
         dice.setFlag(SpriteFlag.Invisible, !(show))
@@ -211,6 +229,11 @@ function ask_roll_dice_until () {
         make_game_buttons()
     } else {
         game.showLongText("You already have that many points!", DialogLayout.Bottom)
+    }
+}
+function destroy_grid_buttons () {
+    for (let button of grid_buttons) {
+        button.destroy()
     }
 }
 controller.down.onEvent(ControllerButtonEvent.Pressed, function () {
@@ -252,6 +275,7 @@ function hide_shop () {
     in_shop = false
     make_game_buttons()
     show_dice(true)
+    destroy_grid_buttons()
 }
 function place_die () {
     die_per_row = Math.ceil(Math.sqrt(die.length))
@@ -272,21 +296,13 @@ function place_die () {
         }
     }
 }
-/**
- * Types of upgrades:
- * 
- * 1: Increment all die's sides (+1 to +10)
- * 
- *     cost: (200 + 10%) + (increment * 5%)
- * 
- * 2: Multiply all die's sides (2x to 5x)
- * 
- *     cost: (500 + 20%) + (multiply * 10%)
- * 
- * 0: Buy more dice (+1 to +5)
- * 
- *     cost: (100 + 10%) * dice
- */
+// Types of upgrades:
+// 1: Increment all die's sides (+1 to +10)
+//     cost: (200 + 10%) + (increment * 5%)
+// 2: Multiply all die's sides (2x to 5x)
+//     cost: (500 + 20%) + (multiply * 10%)
+// 0: Buy more dice (+1 to +5)
+//     cost: (100 + 10%) * dice
 function generate_shop_upgrades () {
     shop_upgrades = []
     for (let index = 0; index < 12; index++) {
@@ -318,10 +334,10 @@ function make_shop_buttons () {
         side_buttons[index].y = scene.screenHeight() / 2 - (side_buttons.length - 1) * 10 + index * 20
     }
     update_side_buttons()
+    make_shop_upgrade_buttons()
 }
 let upgrade_data: blockObject.BlockObject = null
 let randint2 = 0
-let shop_upgrades: blockObject.BlockObject[] = []
 let curr_top = 0
 let curr_left = 0
 let orign_left = 0
@@ -329,6 +345,9 @@ let row_counter = 0
 let die_per_col = 0
 let die_per_row = 0
 let to_roll = 0
+let shop_upgrades: blockObject.BlockObject[] = []
+let selected_grid_button = 0
+let grid_buttons: Sprite[] = []
 let button: Sprite = null
 let dice: Sprite = null
 let temp_sprite: TextSprite = null
