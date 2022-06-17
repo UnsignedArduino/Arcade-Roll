@@ -158,6 +158,25 @@ function role_dice_multiple_times (times: number) {
     }
     rolling_multiple = false
 }
+function place_grid_buttons () {
+    die_per_row = Math.ceil(Math.sqrt(grid_buttons.length))
+    die_per_col = Math.ceil(grid_buttons.length / die_per_row)
+    row_counter = 0
+    orign_left = scene.screenWidth() / 2 - die_per_row * 18 / 2
+    curr_left = orign_left
+    curr_top = scene.screenHeight() / 2 - die_per_col * 18 / 2
+    for (let dice of grid_buttons) {
+        dice.left = curr_left
+        dice.top = curr_top
+        curr_left += 18
+        row_counter += 1
+        if (row_counter == die_per_row) {
+            row_counter = 0
+            curr_left = orign_left
+            curr_top += 18
+        }
+    }
+}
 function make_die () {
     die = []
     for (let index = 0; index < 2; index++) {
@@ -207,7 +226,7 @@ function make_shop_upgrade_buttons () {
         } else {
             if (blockObject.getNumberProperty(upgrade, NumProp.upgrade_type) == 1) {
                 grid_buttons.push(make_button(assets.image`increment_die_upgrade_button`, assets.image`increment_die_upgrade_button_hover`, "", "Increment all sides of a die by " + blockObject.getNumberProperty(upgrade, NumProp.upgrade_variant) + " for $" + blockObject.getNumberProperty(upgrade, NumProp.upgrade_cost)))
-            } else if (blockObject.getNumberProperty(upgrade, NumProp.upgrade_type) == 1) {
+            } else if (blockObject.getNumberProperty(upgrade, NumProp.upgrade_type) == 2) {
                 grid_buttons.push(make_button(assets.image`multiply_die_upgrade_button`, assets.image`multiply_die_upgrade_button_hover`, "", "Multiply all sides of a die by " + blockObject.getNumberProperty(upgrade, NumProp.upgrade_variant) + " for $" + blockObject.getNumberProperty(upgrade, NumProp.upgrade_cost)))
             } else {
                 grid_buttons.push(make_button(assets.image`add_die_upgrade_button`, assets.image`add_die_upgrade_button_hover`, "", "Add " + blockObject.getNumberProperty(upgrade, NumProp.upgrade_variant) + " dice for $" + blockObject.getNumberProperty(upgrade, NumProp.upgrade_cost)))
@@ -215,6 +234,7 @@ function make_shop_upgrade_buttons () {
         }
         blockObject.storeOnSprite(upgrade, grid_buttons[grid_buttons.length - 1])
     }
+    place_grid_buttons()
 }
 function show_dice (show: boolean) {
     for (let dice of die) {
@@ -327,7 +347,6 @@ function make_shop_buttons () {
     destroy_side_buttons()
     side_buttons = [make_button(assets.image`exit_shop_button`, assets.image`exit_shop_button_selected`, "", "Exit shop")]
     selected_side_button = 0
-    side_buttons.push(make_button(assets.image`upgrade_shop_button`, assets.image`upgrade_shop_selected_button`, "", "Upgrade shop"))
     side_buttons.push(make_button(assets.image`reroll_shop_button`, assets.image`reroll_shop_button_selected`, "", "Re-roll shop"))
     for (let index = 0; index <= side_buttons.length - 1; index++) {
         side_buttons[index].left = 2
@@ -338,17 +357,17 @@ function make_shop_buttons () {
 }
 let upgrade_data: blockObject.BlockObject = null
 let randint2 = 0
+let to_roll = 0
+let shop_upgrades: blockObject.BlockObject[] = []
+let selected_grid_button = 0
+let button: Sprite = null
 let curr_top = 0
 let curr_left = 0
 let orign_left = 0
 let row_counter = 0
 let die_per_col = 0
-let die_per_row = 0
-let to_roll = 0
-let shop_upgrades: blockObject.BlockObject[] = []
-let selected_grid_button = 0
 let grid_buttons: Sprite[] = []
-let button: Sprite = null
+let die_per_row = 0
 let dice: Sprite = null
 let temp_sprite: TextSprite = null
 let dice_data: blockObject.BlockObject = null
@@ -363,6 +382,7 @@ let rolling_multiple = false
 rolling_multiple = false
 cancel_multiple_roll = false
 in_shop = false
+let on_grid_buttons = false
 stats.turnStats(true)
 controller.configureRepeatEventDefaults(1000, 50)
 prepare_hud()
