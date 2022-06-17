@@ -16,6 +16,21 @@ namespace ImageProp {
     export const image = ImageProp.create()
     export const selected = ImageProp.create()
 }
+/**
+ * Types of upgrades:
+ * 
+ * 0: Buy more dice (+1 to +5)
+ * 
+ *     cost: (100 + 10%) * dice
+ * 
+ * 1: Increment all die's sides (+1 to +10)
+ * 
+ *     cost: (200 + 10%) * (increment * 100)
+ * 
+ * 2: Multiply all die's sides (2x to 5x)
+ * 
+ *     cost: (500 + 20%) * (multiply * 300)
+ */
 function update_side_buttons () {
     if (!(spriteutils.isDestroyed(selected_side_label))) {
         selected_side_label.destroy()
@@ -266,6 +281,12 @@ function place_die () {
         }
     }
 }
+function generate_shop_upgrades () {
+    shop_upgrades = []
+    for (let index = 0; index < 12; index++) {
+    	
+    }
+}
 function make_shop_buttons () {
     destroy_side_buttons()
     side_buttons = [make_button(assets.image`exit_shop_button`, assets.image`exit_shop_button_selected`, "", "Exit shop")]
@@ -278,6 +299,7 @@ function make_shop_buttons () {
     }
     update_side_buttons()
 }
+let shop_upgrades: number[] = []
 let curr_top = 0
 let curr_left = 0
 let orign_left = 0
@@ -304,3 +326,4 @@ stats.turnStats(true)
 controller.configureRepeatEventDefaults(1000, 50)
 prepare_hud()
 make_die()
+generate_shop_upgrades()
