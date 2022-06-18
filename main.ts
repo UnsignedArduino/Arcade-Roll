@@ -26,9 +26,6 @@ function update_side_buttons () {
     if (!(spriteutils.isDestroyed(selected_side_label))) {
         selected_side_label.destroy()
     }
-    if (!(spriteutils.isDestroyed(selected_grid_label))) {
-        selected_grid_label.destroy()
-    }
     for (let index = 0; index <= side_buttons.length - 1; index++) {
         button_data = blockObject.getStoredObject(side_buttons[index])
         if (selected_side_button == index && !(on_grid_buttons)) {
@@ -45,12 +42,18 @@ function update_side_buttons () {
     }
 }
 controller.up.onEvent(ControllerButtonEvent.Pressed, function () {
-    if (selected_side_button > 0) {
-        selected_side_button += -1
-        update_side_buttons()
-        if (in_shop) {
-            update_grid_buttons()
+    if (in_shop && on_grid_buttons) {
+        if (selected_grid_button > 4) {
+            selected_grid_button = Math.max(selected_grid_button - 4, 0)
         }
+    } else {
+        if (selected_side_button > 0) {
+            selected_side_button += -1
+        }
+    }
+    update_side_buttons()
+    if (in_shop) {
+        update_grid_buttons()
     }
 })
 function roll_die () {
@@ -81,8 +84,18 @@ controller.A.onEvent(ControllerButtonEvent.Pressed, function () {
     if (rolling_multiple) {
         cancel_rolling()
     } else if (in_shop) {
-        if (selected_side_button == 0) {
-            hide_shop()
+        if (on_grid_buttons) {
+        	
+        } else {
+            if (selected_side_button == 0) {
+                hide_shop()
+            } else if (selected_side_button == 1) {
+                generate_shop_upgrades()
+                make_shop_buttons()
+                update_grid_buttons()
+                selected_side_button = 1
+                update_side_buttons()
+            }
         }
     } else {
         if (selected_side_button == 0) {
@@ -105,6 +118,19 @@ function show_shop () {
     make_shop_buttons()
     show_dice(false)
 }
+controller.left.onEvent(ControllerButtonEvent.Pressed, function () {
+    if (in_shop) {
+        if (on_grid_buttons) {
+            if (selected_grid_button % 4 == 0) {
+                on_grid_buttons = false
+            } else {
+                selected_grid_button = Math.max(selected_grid_button - 1, 0)
+            }
+        }
+        update_side_buttons()
+        update_grid_buttons()
+    }
+})
 function make_dice () {
     dice = sprites.create(generate_die_side(1), SpriteKind.Dice)
     dice_data = blockObject.create()
@@ -202,25 +228,33 @@ function make_button (image2: Image, selected_image: Image, label: string, hover
     return button
 }
 function update_grid_buttons () {
-    if (!(spriteutils.isDestroyed(selected_side_label))) {
-        selected_side_label.destroy()
-    }
-    if (!(spriteutils.isDestroyed(selected_grid_label))) {
-        selected_grid_label.destroy()
-    }
     for (let index = 0; index <= grid_buttons.length - 1; index++) {
         button_data = blockObject.getStoredObject(grid_buttons[index])
         if (selected_grid_button == index && on_grid_buttons) {
             grid_buttons[index].setImage(blockObject.getImageProperty(button_data, ImageProp.selected))
-            selected_grid_label = textsprite.create(blockObject.getStringProperty(button_data, StrProp.hover), 0, 3)
-            selected_grid_label.y = grid_buttons[index].y
-            selected_grid_label.left = grid_buttons[index].right + 2
-            selected_grid_label.z = 20
+            grid_buttons[index].sayText(blockObject.getStringProperty(button_data, StrProp.hover))
         } else {
             grid_buttons[index].setImage(blockObject.getImageProperty(button_data, ImageProp.image))
+            grid_buttons[index].sayText("")
         }
     }
 }
+controller.right.onEvent(ControllerButtonEvent.Pressed, function () {
+    if (in_shop) {
+        if (on_grid_buttons) {
+            if (selected_grid_button % 4 == 3) {
+            	
+            } else {
+                selected_grid_button = Math.min(selected_grid_button + 1, grid_buttons.length - 1)
+            }
+        } else {
+            on_grid_buttons = true
+            selected_side_button = 0
+        }
+        update_side_buttons()
+        update_grid_buttons()
+    }
+})
 function destroy_side_buttons () {
     for (let button of side_buttons) {
         button.destroy()
@@ -244,6 +278,7 @@ function generate_die_side (number: number) {
     }
 }
 function make_shop_upgrade_buttons () {
+    destroy_grid_buttons()
     grid_buttons = []
     selected_grid_button = 0
     for (let upgrade of shop_upgrades) {
@@ -255,10 +290,13 @@ function make_shop_upgrade_buttons () {
             } else if (blockObject.getNumberProperty(upgrade, NumProp.upgrade_type) == 2) {
                 grid_buttons.push(make_button(assets.image`multiply_die_upgrade_button`, assets.image`multiply_die_upgrade_button_hover`, "", "Multiply all sides of a die by " + blockObject.getNumberProperty(upgrade, NumProp.upgrade_variant) + " for $" + blockObject.getNumberProperty(upgrade, NumProp.upgrade_cost)))
             } else {
-                grid_buttons.push(make_button(assets.image`add_die_upgrade_button`, assets.image`add_die_upgrade_button_hover`, "", "Add " + blockObject.getNumberProperty(upgrade, NumProp.upgrade_variant) + " dice for $" + blockObject.getNumberProperty(upgrade, NumProp.upgrade_cost)))
+                if (blockObject.getNumberProperty(upgrade, NumProp.upgrade_variant) == 1) {
+                    grid_buttons.push(make_button(assets.image`add_die_upgrade_button`, assets.image`add_die_upgrade_button_hover`, "", "Add 1 die for $" + blockObject.getNumberProperty(upgrade, NumProp.upgrade_cost)))
+                } else {
+                    grid_buttons.push(make_button(assets.image`add_die_upgrade_button`, assets.image`add_die_upgrade_button_hover`, "", "Add " + blockObject.getNumberProperty(upgrade, NumProp.upgrade_variant) + " dice for $" + blockObject.getNumberProperty(upgrade, NumProp.upgrade_cost)))
+                }
             }
         }
-        blockObject.storeOnSprite(upgrade, grid_buttons[grid_buttons.length - 1])
     }
     place_grid_buttons()
     update_grid_buttons()
@@ -284,12 +322,18 @@ function destroy_grid_buttons () {
     }
 }
 controller.down.onEvent(ControllerButtonEvent.Pressed, function () {
-    if (selected_side_button < side_buttons.length - 1) {
-        selected_side_button += 1
-        update_side_buttons()
-        if (in_shop) {
-            update_grid_buttons()
+    if (in_shop && on_grid_buttons) {
+        if (selected_grid_button < 8) {
+            selected_grid_button = Math.min(selected_grid_button + 4, grid_buttons.length - 1)
         }
+    } else {
+        if (selected_side_button < side_buttons.length - 1) {
+            selected_side_button += 1
+        }
+    }
+    update_side_buttons()
+    if (in_shop) {
+        update_grid_buttons()
     }
 })
 function ask_roll_dice_multiple_times () {
@@ -389,7 +433,6 @@ let upgrade_data: blockObject.BlockObject = null
 let randint2 = 0
 let to_roll = 0
 let shop_upgrades: blockObject.BlockObject[] = []
-let selected_grid_button = 0
 let button: Sprite = null
 let curr_top = 0
 let curr_left = 0
@@ -402,10 +445,10 @@ let dice: Sprite = null
 let temp_sprite: TextSprite = null
 let dice_data: blockObject.BlockObject = null
 let die: Sprite[] = []
+let selected_grid_button = 0
 let selected_side_button = 0
 let button_data: blockObject.BlockObject = null
 let side_buttons: Sprite[] = []
-let selected_grid_label: TextSprite = null
 let selected_side_label: TextSprite = null
 let on_grid_buttons = false
 let in_shop = false
