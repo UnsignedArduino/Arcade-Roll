@@ -13,6 +13,7 @@ namespace NumArrayProp {
 }
 namespace BoolProp {
     export const upgrade_bought = BoolProp.create()
+    export const need_dice_picked = BoolProp.create()
 }
 namespace StrProp {
     export const label = StrProp.create()
@@ -86,7 +87,9 @@ controller.A.onEvent(ControllerButtonEvent.Pressed, function () {
     } else if (in_shop) {
         if (on_grid_buttons) {
             if (info.score() >= blockObject.getNumberProperty(shop_upgrades[selected_grid_button], NumProp.upgrade_cost)) {
-                pick_a_die()
+                if (!(blockObject.getNumberProperty(shop_upgrades[selected_grid_button], NumProp.upgrade_type) == 0)) {
+                    pick_a_die()
+                }
             } else {
                 scene.cameraShake(4, 200)
             }
@@ -440,12 +443,15 @@ function generate_shop_upgrades () {
         if (randint2 == 1) {
             blockObject.setNumberProperty(upgrade_data, NumProp.upgrade_variant, randint(1, 10))
             blockObject.setNumberProperty(upgrade_data, NumProp.upgrade_cost, Math.round(200 + info.score() * 0.1 + blockObject.getNumberProperty(upgrade_data, NumProp.upgrade_variant) * (info.score() * 0.05)))
+            blockObject.setBooleanProperty(upgrade_data, BoolProp.need_dice_picked, true)
         } else if (randint2 == 2) {
             blockObject.setNumberProperty(upgrade_data, NumProp.upgrade_variant, randint(2, 5))
             blockObject.setNumberProperty(upgrade_data, NumProp.upgrade_cost, Math.round(500 + info.score() * 0.2 + blockObject.getNumberProperty(upgrade_data, NumProp.upgrade_variant) * (info.score() * 0.1)))
+            blockObject.setBooleanProperty(upgrade_data, BoolProp.need_dice_picked, true)
         } else {
             blockObject.setNumberProperty(upgrade_data, NumProp.upgrade_variant, randint(1, 5))
             blockObject.setNumberProperty(upgrade_data, NumProp.upgrade_cost, Math.round((100 + info.score() * 0.1) * blockObject.getNumberProperty(upgrade_data, NumProp.upgrade_variant)))
+            blockObject.setBooleanProperty(upgrade_data, BoolProp.need_dice_picked, false)
         }
         shop_upgrades.push(upgrade_data)
     }
