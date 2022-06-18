@@ -85,7 +85,11 @@ controller.A.onEvent(ControllerButtonEvent.Pressed, function () {
         cancel_rolling()
     } else if (in_shop) {
         if (on_grid_buttons) {
-        	
+            if (info.score() >= blockObject.getNumberProperty(shop_upgrades[selected_grid_button], NumProp.upgrade_cost)) {
+                pick_a_die()
+            } else {
+                scene.cameraShake(4, 200)
+            }
         } else {
             if (selected_side_button == 0) {
                 hide_shop()
@@ -226,6 +230,28 @@ function make_button (image2: Image, selected_image: Image, label: string, hover
     blockObject.setStringProperty(button_data, StrProp.hover, hover)
     blockObject.storeOnSprite(button_data, button)
     return button
+}
+function pick_a_die () {
+    picking_die = true
+    destroy_side_buttons()
+    destroy_grid_buttons()
+    while (controller.A.isPressed()) {
+        pause(0)
+    }
+    while (true) {
+        if (controller.A.isPressed()) {
+            picked_die = die[0]
+            break;
+        } else if (controller.B.isPressed()) {
+            picked_die = [][0]
+            break;
+        }
+        pause(0)
+    }
+    picking_die = false
+    show_shop()
+    make_shop_upgrade_buttons()
+    return picked_die
 }
 function update_grid_buttons () {
     for (let index = 0; index <= grid_buttons.length - 1; index++) {
@@ -432,7 +458,7 @@ function make_shop_buttons () {
 let upgrade_data: blockObject.BlockObject = null
 let randint2 = 0
 let to_roll = 0
-let shop_upgrades: blockObject.BlockObject[] = []
+let picked_die: Sprite = null
 let button: Sprite = null
 let curr_top = 0
 let curr_left = 0
@@ -442,6 +468,7 @@ let die_per_col = 0
 let grid_buttons: Sprite[] = []
 let die_per_row = 0
 let dice: Sprite = null
+let shop_upgrades: blockObject.BlockObject[] = []
 let temp_sprite: TextSprite = null
 let dice_data: blockObject.BlockObject = null
 let die: Sprite[] = []
@@ -450,6 +477,7 @@ let selected_side_button = 0
 let button_data: blockObject.BlockObject = null
 let side_buttons: Sprite[] = []
 let selected_side_label: TextSprite = null
+let picking_die = false
 let on_grid_buttons = false
 let in_shop = false
 let cancel_multiple_roll = false
@@ -458,6 +486,7 @@ rolling_multiple = false
 cancel_multiple_roll = false
 in_shop = false
 on_grid_buttons = false
+picking_die = false
 stats.turnStats(true)
 controller.configureRepeatEventDefaults(1000, 50)
 prepare_hud()
