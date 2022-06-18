@@ -235,6 +235,12 @@ function pick_a_die () {
     picking_die = true
     destroy_side_buttons()
     destroy_grid_buttons()
+    show_dice(true)
+    instructions_label = textsprite.create("A to upgrade, B to cancel", 0, 15)
+    instructions_label.left = 2
+    instructions_label.bottom = scene.screenHeight() - 2
+    instructions_label.z = 50
+    instructions_label.setFlag(SpriteFlag.Ghost, true)
     while (controller.A.isPressed()) {
         pause(0)
     }
@@ -249,6 +255,7 @@ function pick_a_die () {
         pause(0)
     }
     picking_die = false
+    instructions_label.destroy()
     show_shop()
     make_shop_upgrade_buttons()
     return picked_die
@@ -459,6 +466,7 @@ let upgrade_data: blockObject.BlockObject = null
 let randint2 = 0
 let to_roll = 0
 let picked_die: Sprite = null
+let instructions_label: TextSprite = null
 let button: Sprite = null
 let curr_top = 0
 let curr_left = 0
