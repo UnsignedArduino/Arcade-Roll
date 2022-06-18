@@ -330,9 +330,9 @@ function make_shop_upgrade_buttons () {
             grid_buttons.push(make_button(assets.image`upgrade_already_bought_button`, assets.image`upgrade_already_bought_button_hover`, "", "Upgrade already bought!"))
         } else {
             if (blockObject.getNumberProperty(upgrade, NumProp.upgrade_type) == 1) {
-                grid_buttons.push(make_button(assets.image`increment_die_upgrade_button`, assets.image`increment_die_upgrade_button_hover`, "", "Increment all sides of a die by " + blockObject.getNumberProperty(upgrade, NumProp.upgrade_variant) + " for $" + blockObject.getNumberProperty(upgrade, NumProp.upgrade_cost)))
+                grid_buttons.push(make_button(assets.image`increment_die_upgrade_button`, assets.image`increment_die_upgrade_button_hover`, "", "Increment a side of a die by " + blockObject.getNumberProperty(upgrade, NumProp.upgrade_variant) + " for $" + blockObject.getNumberProperty(upgrade, NumProp.upgrade_cost)))
             } else if (blockObject.getNumberProperty(upgrade, NumProp.upgrade_type) == 2) {
-                grid_buttons.push(make_button(assets.image`multiply_die_upgrade_button`, assets.image`multiply_die_upgrade_button_hover`, "", "Multiply all sides of a die by " + blockObject.getNumberProperty(upgrade, NumProp.upgrade_variant) + " for $" + blockObject.getNumberProperty(upgrade, NumProp.upgrade_cost)))
+                grid_buttons.push(make_button(assets.image`multiply_die_upgrade_button`, assets.image`multiply_die_upgrade_button_hover`, "", "Multiply a side of a die by " + blockObject.getNumberProperty(upgrade, NumProp.upgrade_variant) + " for $" + blockObject.getNumberProperty(upgrade, NumProp.upgrade_cost)))
             } else {
                 if (blockObject.getNumberProperty(upgrade, NumProp.upgrade_variant) == 1) {
                     grid_buttons.push(make_button(assets.image`add_die_upgrade_button`, assets.image`add_die_upgrade_button_hover`, "", "Add 1 die for $" + blockObject.getNumberProperty(upgrade, NumProp.upgrade_cost)))
@@ -435,9 +435,9 @@ function place_die () {
     }
 }
 // Types of upgrades:
-// 1: Increment all die's sides (+1 to +10)
+// 1: Increment a die's side (+1 to +10)
 //     cost: (200 + 10%) + (increment * 5%)
-// 2: Multiply all die's sides (2x to 5x)
+// 2: Multiply a die's sides (2x to 5x)
 //     cost: (500 + 20%) + (multiply * 10%)
 // 0: Buy more dice (+1 to +5)
 //     cost: (100 + 10%) * dice
