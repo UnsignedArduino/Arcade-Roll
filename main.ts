@@ -48,6 +48,9 @@ controller.up.onEvent(ControllerButtonEvent.Pressed, function () {
     if (selected_side_button > 0) {
         selected_side_button += -1
         update_side_buttons()
+        if (in_shop) {
+            update_grid_buttons()
+        }
     }
 })
 function roll_die () {
@@ -284,6 +287,9 @@ controller.down.onEvent(ControllerButtonEvent.Pressed, function () {
     if (selected_side_button < side_buttons.length - 1) {
         selected_side_button += 1
         update_side_buttons()
+        if (in_shop) {
+            update_grid_buttons()
+        }
     }
 })
 function ask_roll_dice_multiple_times () {
