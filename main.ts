@@ -87,7 +87,7 @@ controller.A.onEvent(ControllerButtonEvent.Pressed, function () {
     } else if (in_shop) {
         if (on_grid_buttons) {
             if (info.score() >= blockObject.getNumberProperty(shop_upgrades[selected_grid_button], NumProp.upgrade_cost)) {
-                if (!(blockObject.getNumberProperty(shop_upgrades[selected_grid_button], NumProp.upgrade_type) == 0)) {
+                if (does_upgrade_type_need_die(blockObject.getNumberProperty(shop_upgrades[selected_grid_button], NumProp.upgrade_type))) {
                     pick_a_die()
                 }
             } else {
@@ -152,6 +152,14 @@ function make_dice () {
     blockObject.setNumberProperty(dice_data, NumProp.selected, 0)
     blockObject.storeOnSprite(dice_data, dice)
     return dice
+}
+function does_upgrade_type_need_die (t: number) {
+    return [
+    1,
+    2,
+    2,
+    2
+    ].indexOf(t) != -1
 }
 function make_cancel_rolls_buttons () {
     destroy_side_buttons()
