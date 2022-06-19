@@ -86,10 +86,22 @@ controller.A.onEvent(ControllerButtonEvent.Pressed, function () {
         cancel_rolling()
     } else if (in_shop) {
         if (on_grid_buttons) {
-            if (info.score() >= blockObject.getNumberProperty(shop_upgrades[selected_grid_button], NumProp.upgrade_cost)) {
+            if (info.score() >= blockObject.getNumberProperty(shop_upgrades[selected_grid_button], NumProp.upgrade_cost) && !(blockObject.getBooleanProperty(shop_upgrades[selected_grid_button], BoolProp.upgrade_bought))) {
+                previous_selected = selected_grid_button
                 if (does_upgrade_type_need_die(blockObject.getNumberProperty(shop_upgrades[selected_grid_button], NumProp.upgrade_type))) {
                     pick_a_die()
+                } else {
+                    apply_upgrade([], [shop_upgrades[selected_grid_button]])
+                    info.changeScoreBy(-1 * blockObject.getNumberProperty(shop_upgrades[selected_grid_button], NumProp.upgrade_cost))
+                    blockObject.setBooleanProperty(shop_upgrades[selected_grid_button], BoolProp.upgrade_bought, true)
+                    for (let index = 0; index < 3; index++) {
+                        grid_buttons[selected_grid_button].startEffect(effects.confetti, 1000)
+                    }
                 }
+                destroy_grid_buttons()
+                make_shop_buttons()
+                selected_grid_button = previous_selected
+                update_grid_buttons()
             } else {
                 scene.cameraShake(4, 200)
             }
@@ -233,7 +245,7 @@ function make_die () {
 }
 function make_button (image2: Image, selected_image: Image, label: string, hover: string) {
     button = sprites.create(image2, SpriteKind.Button)
-    button.z = 20
+    button.z = 1
     button_data = blockObject.create()
     blockObject.setImageProperty(button_data, ImageProp.image, image2)
     blockObject.setImageProperty(button_data, ImageProp.selected, selected_image)
@@ -274,11 +286,21 @@ function update_grid_buttons () {
     for (let index = 0; index <= grid_buttons.length - 1; index++) {
         button_data = blockObject.getStoredObject(grid_buttons[index])
         if (selected_grid_button == index && on_grid_buttons) {
-            grid_buttons[index].setImage(blockObject.getImageProperty(button_data, ImageProp.selected))
-            grid_buttons[index].sayText(blockObject.getStringProperty(button_data, StrProp.hover))
+            if (blockObject.getBooleanProperty(button_data, BoolProp.upgrade_bought)) {
+                grid_buttons[index].setImage(assets.image`upgrade_already_bought_button_hover`)
+                grid_buttons[index].sayText("Already bought!")
+            } else {
+                grid_buttons[index].setImage(blockObject.getImageProperty(button_data, ImageProp.selected))
+                grid_buttons[index].sayText(blockObject.getStringProperty(button_data, StrProp.hover))
+            }
         } else {
-            grid_buttons[index].setImage(blockObject.getImageProperty(button_data, ImageProp.image))
-            grid_buttons[index].sayText("")
+            if (blockObject.getBooleanProperty(button_data, BoolProp.upgrade_bought)) {
+                grid_buttons[index].setImage(assets.image`upgrade_already_bought_button`)
+                grid_buttons[index].sayText("Already bought!")
+            } else {
+                grid_buttons[index].setImage(blockObject.getImageProperty(button_data, ImageProp.image))
+                grid_buttons[index].sayText("")
+            }
         }
     }
 }
@@ -475,6 +497,19 @@ function make_shop_buttons () {
     update_side_buttons()
     make_shop_upgrade_buttons()
 }
+function apply_upgrade (die_select: any[], upgrade_in_list: any[]) {
+    if (does_upgrade_type_need_die(blockObject.getNumberProperty(upgrade_in_list[0], NumProp.upgrade_type))) {
+    	
+    } else {
+        if (blockObject.getNumberProperty(upgrade_in_list[0], NumProp.upgrade_type) == 0) {
+            for (let index = 0; index < blockObject.getNumberProperty(upgrade_in_list[0], NumProp.upgrade_variant); index++) {
+                die.push(make_dice())
+            }
+            place_die()
+            show_dice(false)
+        }
+    }
+}
 let upgrade_data: blockObject.BlockObject = null
 let randint2 = 0
 let to_roll = 0
@@ -486,9 +521,10 @@ let curr_left = 0
 let orign_left = 0
 let row_counter = 0
 let die_per_col = 0
-let grid_buttons: Sprite[] = []
 let die_per_row = 0
 let dice: Sprite = null
+let grid_buttons: Sprite[] = []
+let previous_selected = 0
 let shop_upgrades: blockObject.BlockObject[] = []
 let temp_sprite: TextSprite = null
 let dice_data: blockObject.BlockObject = null
