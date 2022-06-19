@@ -252,7 +252,7 @@ function create_all_face_die () {
             dice_face.left = dice.left + 1 * 18
         }
         if (true) {
-            dice_face = sprites.create(generate_die_side(blockObject.getNumberArrayProperty(dice_data, NumArrayProp.values)[2]), SpriteKind.DiceFace)
+            dice_face = sprites.create(generate_die_side(blockObject.getNumberArrayProperty(dice_data, NumArrayProp.values)[3]), SpriteKind.DiceFace)
             dice_face.top = dice.top + 1 * 18
             dice_face.left = dice.left + 0 * 18
         }
@@ -262,17 +262,17 @@ function create_all_face_die () {
             dice_face.left = dice.left + 1 * 18
         }
         if (true) {
-            dice_face = sprites.create(generate_die_side(blockObject.getNumberArrayProperty(dice_data, NumArrayProp.values)[3]), SpriteKind.DiceFace)
+            dice_face = sprites.create(generate_die_side(blockObject.getNumberArrayProperty(dice_data, NumArrayProp.values)[2]), SpriteKind.DiceFace)
             dice_face.top = dice.top + 1 * 18
             dice_face.left = dice.left + 2 * 18
         }
         if (true) {
-            dice_face = sprites.create(generate_die_side(blockObject.getNumberArrayProperty(dice_data, NumArrayProp.values)[4]), SpriteKind.DiceFace)
+            dice_face = sprites.create(generate_die_side(blockObject.getNumberArrayProperty(dice_data, NumArrayProp.values)[5]), SpriteKind.DiceFace)
             dice_face.top = dice.top + 2 * 18
             dice_face.left = dice.left + 1 * 18
         }
         if (true) {
-            dice_face = sprites.create(generate_die_side(blockObject.getNumberArrayProperty(dice_data, NumArrayProp.values)[5]), SpriteKind.DiceFace)
+            dice_face = sprites.create(generate_die_side(blockObject.getNumberArrayProperty(dice_data, NumArrayProp.values)[4]), SpriteKind.DiceFace)
             dice_face.top = dice.top + 3 * 18
             dice_face.left = dice.left + 1 * 18
         }
