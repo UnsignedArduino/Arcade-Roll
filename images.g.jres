@@ -164,6 +164,16 @@
         "mimeType": "image/x-mkcd-f4",
         "displayName": "upgrade_already_bought_button"
     },
+    "image34": {
+        "data": "hwQQABAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAADwDwAAAAAAAPAPAAAAAAAA8A8AAAAAAADwDwAAAADw/////w8AAPD/////DwAAAADwDwAAAAAAAPAPAAAAAAAA8A8AAAAAAADwDwAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
+        "mimeType": "image/x-mkcd-f4",
+        "displayName": "cursor_image"
+    },
+    "image35": {
+        "data": "hwQCAAIAAAD/AAAA/wAAAA==",
+        "mimeType": "image/x-mkcd-f4",
+        "displayName": "cursor"
+    },
     "*": {
         "mimeType": "image/x-mkcd-f4",
         "dataEncoding": "base64",
