@@ -246,7 +246,6 @@ function pick_a_die () {
     picking_die = true
     destroy_side_buttons()
     destroy_grid_buttons()
-    show_dice(true)
     instructions_label = textsprite.create("A to upgrade, B to cancel", 0, 15)
     instructions_label.left = 2
     instructions_label.bottom = scene.screenHeight() - 2
@@ -514,3 +513,4 @@ controller.configureRepeatEventDefaults(1000, 50)
 prepare_hud()
 make_die()
 generate_shop_upgrades()
+info.setScore(1000)
