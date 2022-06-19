@@ -244,39 +244,40 @@ function place_grid_buttons () {
     }
 }
 function create_all_face_die () {
+    most_top = die[0].top
+    most_left = die[0].left
     for (let dice of die) {
         dice_data = blockObject.getStoredObject(dice)
         if (true) {
             dice_face = sprites.create(generate_die_side(blockObject.getNumberArrayProperty(dice_data, NumArrayProp.values)[0]), SpriteKind.DiceFace)
-            dice_face.top = dice.top + 0 * 18
-            dice_face.left = dice.left + 1 * 18
+            dice_face.top = (dice.top - most_top) / 18 * (3 * 18) + 0 * 18
+            dice_face.left = (dice.left - most_left) / 18 * (4 * 18) + 1 * 18
         }
         if (true) {
             dice_face = sprites.create(generate_die_side(blockObject.getNumberArrayProperty(dice_data, NumArrayProp.values)[3]), SpriteKind.DiceFace)
-            dice_face.top = dice.top + 1 * 18
-            dice_face.left = dice.left + 0 * 18
+            dice_face.top = (dice.top - most_top) / 18 * (3 * 18) + 1 * 18
+            dice_face.left = (dice.left - most_left) / 18 * (4 * 18) + 0 * 18
         }
         if (true) {
             dice_face = sprites.create(generate_die_side(blockObject.getNumberArrayProperty(dice_data, NumArrayProp.values)[1]), SpriteKind.DiceFace)
-            dice_face.top = dice.top + 1 * 18
-            dice_face.left = dice.left + 1 * 18
+            dice_face.top = (dice.top - most_top) / 18 * (3 * 18) + 1 * 18
+            dice_face.left = (dice.left - most_left) / 18 * (4 * 18) + 1 * 18
         }
         if (true) {
             dice_face = sprites.create(generate_die_side(blockObject.getNumberArrayProperty(dice_data, NumArrayProp.values)[2]), SpriteKind.DiceFace)
-            dice_face.top = dice.top + 1 * 18
-            dice_face.left = dice.left + 2 * 18
+            dice_face.top = (dice.top - most_top) / 18 * (3 * 18) + 1 * 18
+            dice_face.left = (dice.left - most_left) / 18 * (4 * 18) + 2 * 18
         }
         if (true) {
             dice_face = sprites.create(generate_die_side(blockObject.getNumberArrayProperty(dice_data, NumArrayProp.values)[5]), SpriteKind.DiceFace)
-            dice_face.top = dice.top + 2 * 18
-            dice_face.left = dice.left + 1 * 18
+            dice_face.top = (dice.top - most_top) / 18 * (3 * 18) + 2 * 18
+            dice_face.left = (dice.left - most_left) / 18 * (4 * 18) + 1 * 18
         }
         if (true) {
             dice_face = sprites.create(generate_die_side(blockObject.getNumberArrayProperty(dice_data, NumArrayProp.values)[4]), SpriteKind.DiceFace)
-            dice_face.top = dice.top + 3 * 18
-            dice_face.left = dice.left + 1 * 18
+            dice_face.top = (dice.top - most_top) / 18 * (3 * 18) + 3 * 18
+            dice_face.left = (dice.left - most_left) / 18 * (4 * 18) + 1 * 18
         }
-        break;
     }
 }
 function make_die () {
@@ -577,6 +578,8 @@ let cursor_image: Sprite = null
 let instructions_label: TextSprite = null
 let button: Sprite = null
 let dice_face: Sprite = null
+let most_left = 0
+let most_top = 0
 let curr_top = 0
 let curr_left = 0
 let orign_left = 0
