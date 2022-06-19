@@ -1,6 +1,7 @@
 namespace SpriteKind {
     export const Button = SpriteKind.create()
     export const Dice = SpriteKind.create()
+    export const DiceFace = SpriteKind.create()
 }
 namespace NumProp {
     export const selected = NumProp.create()
@@ -242,6 +243,42 @@ function place_grid_buttons () {
         }
     }
 }
+function create_all_face_die () {
+    for (let dice of die) {
+        dice_data = blockObject.getStoredObject(dice)
+        if (true) {
+            dice_face = sprites.create(generate_die_side(blockObject.getNumberArrayProperty(dice_data, NumArrayProp.values)[0]), SpriteKind.DiceFace)
+            dice_face.top = dice.top + 0 * 18
+            dice_face.left = dice.left + 1 * 18
+        }
+        if (true) {
+            dice_face = sprites.create(generate_die_side(blockObject.getNumberArrayProperty(dice_data, NumArrayProp.values)[2]), SpriteKind.DiceFace)
+            dice_face.top = dice.top + 1 * 18
+            dice_face.left = dice.left + 0 * 18
+        }
+        if (true) {
+            dice_face = sprites.create(generate_die_side(blockObject.getNumberArrayProperty(dice_data, NumArrayProp.values)[1]), SpriteKind.DiceFace)
+            dice_face.top = dice.top + 1 * 18
+            dice_face.left = dice.left + 1 * 18
+        }
+        if (true) {
+            dice_face = sprites.create(generate_die_side(blockObject.getNumberArrayProperty(dice_data, NumArrayProp.values)[3]), SpriteKind.DiceFace)
+            dice_face.top = dice.top + 1 * 18
+            dice_face.left = dice.left + 2 * 18
+        }
+        if (true) {
+            dice_face = sprites.create(generate_die_side(blockObject.getNumberArrayProperty(dice_data, NumArrayProp.values)[4]), SpriteKind.DiceFace)
+            dice_face.top = dice.top + 2 * 18
+            dice_face.left = dice.left + 1 * 18
+        }
+        if (true) {
+            dice_face = sprites.create(generate_die_side(blockObject.getNumberArrayProperty(dice_data, NumArrayProp.values)[5]), SpriteKind.DiceFace)
+            dice_face.top = dice.top + 3 * 18
+            dice_face.left = dice.left + 1 * 18
+        }
+        break;
+    }
+}
 function make_die () {
     die = []
     for (let index = 0; index < 2; index++) {
@@ -267,11 +304,13 @@ function pick_a_die () {
     instructions_label = textsprite.create("A to upgrade, B to cancel", 0, 15)
     instructions_label.left = 2
     instructions_label.bottom = scene.screenHeight() - 2
-    instructions_label.z = 50
+    instructions_label.z = 10
     instructions_label.setFlag(SpriteFlag.Ghost, true)
     cursor_image = sprites.create(assets.image`cursor_image`, SpriteKind.Player)
     cursor = sprites.create(assets.image`cursor`, SpriteKind.Player)
+    cursor_image.z = 2
     controller.moveSprite(cursor)
+    create_all_face_die()
     while (controller.A.isPressed()) {
         pause(0)
     }
@@ -290,6 +329,7 @@ function pick_a_die () {
     instructions_label.destroy()
     cursor.destroy()
     cursor_image.destroy()
+    sprites.destroyAllSpritesOfKind(SpriteKind.DiceFace)
     show_shop()
     make_shop_upgrade_buttons()
     return picked_die
@@ -536,6 +576,7 @@ let cursor: Sprite = null
 let cursor_image: Sprite = null
 let instructions_label: TextSprite = null
 let button: Sprite = null
+let dice_face: Sprite = null
 let curr_top = 0
 let curr_left = 0
 let orign_left = 0
