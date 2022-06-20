@@ -93,21 +93,29 @@ controller.A.onEvent(ControllerButtonEvent.Pressed, function () {
         } else if (in_shop) {
             if (on_grid_buttons) {
                 if (info.score() >= blockObject.getNumberProperty(shop_upgrades[selected_grid_button], NumProp.upgrade_cost) && !(blockObject.getBooleanProperty(shop_upgrades[selected_grid_button], BoolProp.upgrade_bought))) {
-                    previous_selected = selected_grid_button
-                    if (does_upgrade_type_need_die(blockObject.getNumberProperty(shop_upgrades[selected_grid_button], NumProp.upgrade_type))) {
-                        game.showLongText(pick_a_die(), DialogLayout.Bottom)
-                    } else {
-                        apply_upgrade([], [shop_upgrades[selected_grid_button]])
-                        info.changeScoreBy(-1 * blockObject.getNumberProperty(shop_upgrades[selected_grid_button], NumProp.upgrade_cost))
-                        blockObject.setBooleanProperty(shop_upgrades[selected_grid_button], BoolProp.upgrade_bought, true)
-                        for (let index2 = 0; index2 < 3; index2++) {
-                            grid_buttons[selected_grid_button].startEffect(effects.confetti, 1000)
+                    timer.background(function () {
+                        previous_selected = selected_grid_button
+                        if (does_upgrade_type_need_die(blockObject.getNumberProperty(shop_upgrades[selected_grid_button], NumProp.upgrade_type))) {
+                            if (apply_upgrade(pick_a_die(), [shop_upgrades[selected_grid_button]])) {
+                                info.changeScoreBy(-1 * blockObject.getNumberProperty(shop_upgrades[selected_grid_button], NumProp.upgrade_cost))
+                                blockObject.setBooleanProperty(shop_upgrades[selected_grid_button], BoolProp.upgrade_bought, true)
+                                for (let index2 = 0; index2 < 3; index2++) {
+                                    grid_buttons[selected_grid_button].startEffect(effects.confetti, 1000)
+                                }
+                            }
+                        } else {
+                            apply_upgrade([], [shop_upgrades[selected_grid_button]])
+                            info.changeScoreBy(-1 * blockObject.getNumberProperty(shop_upgrades[selected_grid_button], NumProp.upgrade_cost))
+                            blockObject.setBooleanProperty(shop_upgrades[selected_grid_button], BoolProp.upgrade_bought, true)
+                            for (let index2 = 0; index2 < 3; index2++) {
+                                grid_buttons[selected_grid_button].startEffect(effects.confetti, 1000)
+                            }
                         }
-                    }
-                    destroy_grid_buttons()
-                    make_shop_buttons()
-                    selected_grid_button = previous_selected
-                    update_grid_buttons()
+                        destroy_grid_buttons()
+                        make_shop_buttons()
+                        selected_grid_button = previous_selected
+                        update_grid_buttons()
+                    })
                 } else {
                     scene.cameraShake(4, 200)
                 }
@@ -349,13 +357,14 @@ function pick_a_die () {
     cursor_image = sprites.create(assets.image`cursor_image`, SpriteKind.Player)
     cursor = sprites.create(assets.image`cursor`, SpriteKind.Player)
     cursor_image.z = 2
-    controller.moveSprite(cursor)
     scene.cameraFollowSprite(cursor)
     create_all_face_die()
     cursor.setPosition(most_right / 2, most_bottom / 2)
+    cursor_image.setPosition(cursor.x, cursor.y)
     while (controller.A.isPressed()) {
         pause(0)
     }
+    controller.moveSprite(cursor)
     while (true) {
         cursor.x = Math.constrain(cursor.x, 0, most_right)
         cursor.y = Math.constrain(cursor.y, 0, most_bottom)
@@ -365,6 +374,7 @@ function pick_a_die () {
             for (let face_die of sprites.allOfKind(SpriteKind.DiceFace)) {
                 if (cursor.overlapsWith(face_die)) {
                     picked_die = [blockObject.getNumberProperty(blockObject.getStoredObject(face_die), NumProp.die_index), blockObject.getNumberProperty(blockObject.getStoredObject(face_die), NumProp.side_index)]
+                    break;
                 }
             }
             if (picked_die) {
@@ -613,7 +623,9 @@ function make_shop_buttons () {
 }
 function apply_upgrade (die_select: any[], upgrade_in_list: any[]) {
     if (does_upgrade_type_need_die(blockObject.getNumberProperty(upgrade_in_list[0], NumProp.upgrade_type))) {
-    	
+        if (die_select[0] == -1) {
+            return false
+        }
     } else {
         if (blockObject.getNumberProperty(upgrade_in_list[0], NumProp.upgrade_type) == 0) {
             for (let index2 = 0; index2 < blockObject.getNumberProperty(upgrade_in_list[0], NumProp.upgrade_variant); index2++) {
@@ -623,6 +635,7 @@ function apply_upgrade (die_select: any[], upgrade_in_list: any[]) {
             show_dice(false)
         }
     }
+    return true
 }
 let upgrade_data: blockObject.BlockObject = null
 let randint2 = 0
