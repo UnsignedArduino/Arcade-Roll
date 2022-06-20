@@ -8,6 +8,8 @@ namespace NumProp {
     export const upgrade_type = NumProp.create()
     export const upgrade_variant = NumProp.create()
     export const upgrade_cost = NumProp.create()
+    export const die_index = NumProp.create()
+    export const side_index = NumProp.create()
 }
 namespace NumArrayProp {
     export const values = NumArrayProp.create()
@@ -93,12 +95,12 @@ controller.A.onEvent(ControllerButtonEvent.Pressed, function () {
                 if (info.score() >= blockObject.getNumberProperty(shop_upgrades[selected_grid_button], NumProp.upgrade_cost) && !(blockObject.getBooleanProperty(shop_upgrades[selected_grid_button], BoolProp.upgrade_bought))) {
                     previous_selected = selected_grid_button
                     if (does_upgrade_type_need_die(blockObject.getNumberProperty(shop_upgrades[selected_grid_button], NumProp.upgrade_type))) {
-                        pick_a_die()
+                        game.showLongText(pick_a_die(), DialogLayout.Bottom)
                     } else {
                         apply_upgrade([], [shop_upgrades[selected_grid_button]])
                         info.changeScoreBy(-1 * blockObject.getNumberProperty(shop_upgrades[selected_grid_button], NumProp.upgrade_cost))
                         blockObject.setBooleanProperty(shop_upgrades[selected_grid_button], BoolProp.upgrade_bought, true)
-                        for (let index = 0; index < 3; index++) {
+                        for (let index2 = 0; index2 < 3; index2++) {
                             grid_buttons[selected_grid_button].startEffect(effects.confetti, 1000)
                         }
                     }
@@ -215,7 +217,7 @@ function prepare_hud () {
 function role_dice_multiple_times (times: number) {
     rolling_multiple = true
     cancel_multiple_roll = false
-    for (let index = 0; index < times; index++) {
+    for (let index2 = 0; index2 < times; index2++) {
         roll_die()
         pause(20)
         if (cancel_multiple_roll) {
@@ -248,45 +250,77 @@ function create_all_face_die () {
     most_left = die[0].left
     most_bottom = 0
     most_right = 0
+    index = 0
     for (let dice of die) {
         dice_data = blockObject.getStoredObject(dice)
         if (true) {
             dice_face = sprites.create(generate_die_side(blockObject.getNumberArrayProperty(dice_data, NumArrayProp.values)[0]), SpriteKind.DiceFace)
             dice_face.top = (dice.top - most_top) / 18 * (4.5 * 18) + 0 * 18
             dice_face.left = (dice.left - most_left) / 18 * (3.5 * 18) + 1 * 18
+            if (true) {
+                blockObject.storeOnSprite(blockObject.create(), dice_face)
+                blockObject.setNumberProperty(blockObject.getStoredObject(dice_face), NumProp.die_index, index)
+                blockObject.setNumberProperty(blockObject.getStoredObject(dice_face), NumProp.side_index, 0)
+            }
         }
         if (true) {
             dice_face = sprites.create(generate_die_side(blockObject.getNumberArrayProperty(dice_data, NumArrayProp.values)[3]), SpriteKind.DiceFace)
             dice_face.top = (dice.top - most_top) / 18 * (4.5 * 18) + 1 * 18
             dice_face.left = (dice.left - most_left) / 18 * (3.5 * 18) + 0 * 18
+            if (true) {
+                blockObject.storeOnSprite(blockObject.create(), dice_face)
+                blockObject.setNumberProperty(blockObject.getStoredObject(dice_face), NumProp.die_index, index)
+                blockObject.setNumberProperty(blockObject.getStoredObject(dice_face), NumProp.side_index, 3)
+            }
         }
         if (true) {
             dice_face = sprites.create(generate_die_side(blockObject.getNumberArrayProperty(dice_data, NumArrayProp.values)[1]), SpriteKind.DiceFace)
             dice_face.top = (dice.top - most_top) / 18 * (4.5 * 18) + 1 * 18
             dice_face.left = (dice.left - most_left) / 18 * (3.5 * 18) + 1 * 18
+            if (true) {
+                blockObject.storeOnSprite(blockObject.create(), dice_face)
+                blockObject.setNumberProperty(blockObject.getStoredObject(dice_face), NumProp.die_index, index)
+                blockObject.setNumberProperty(blockObject.getStoredObject(dice_face), NumProp.side_index, 1)
+            }
         }
         if (true) {
             dice_face = sprites.create(generate_die_side(blockObject.getNumberArrayProperty(dice_data, NumArrayProp.values)[2]), SpriteKind.DiceFace)
             dice_face.top = (dice.top - most_top) / 18 * (4.5 * 18) + 1 * 18
             dice_face.left = (dice.left - most_left) / 18 * (3.5 * 18) + 2 * 18
             most_right = Math.max(most_right, dice_face.right)
+            if (true) {
+                blockObject.storeOnSprite(blockObject.create(), dice_face)
+                blockObject.setNumberProperty(blockObject.getStoredObject(dice_face), NumProp.die_index, index)
+                blockObject.setNumberProperty(blockObject.getStoredObject(dice_face), NumProp.side_index, 2)
+            }
         }
         if (true) {
             dice_face = sprites.create(generate_die_side(blockObject.getNumberArrayProperty(dice_data, NumArrayProp.values)[5]), SpriteKind.DiceFace)
             dice_face.top = (dice.top - most_top) / 18 * (4.5 * 18) + 2 * 18
             dice_face.left = (dice.left - most_left) / 18 * (3.5 * 18) + 1 * 18
+            if (true) {
+                blockObject.storeOnSprite(blockObject.create(), dice_face)
+                blockObject.setNumberProperty(blockObject.getStoredObject(dice_face), NumProp.die_index, index)
+                blockObject.setNumberProperty(blockObject.getStoredObject(dice_face), NumProp.side_index, 5)
+            }
         }
         if (true) {
             dice_face = sprites.create(generate_die_side(blockObject.getNumberArrayProperty(dice_data, NumArrayProp.values)[4]), SpriteKind.DiceFace)
             dice_face.top = (dice.top - most_top) / 18 * (4.5 * 18) + 3 * 18
             dice_face.left = (dice.left - most_left) / 18 * (3.5 * 18) + 1 * 18
             most_bottom = Math.max(most_bottom, dice_face.bottom)
+            if (true) {
+                blockObject.storeOnSprite(blockObject.create(), dice_face)
+                blockObject.setNumberProperty(blockObject.getStoredObject(dice_face), NumProp.die_index, index)
+                blockObject.setNumberProperty(blockObject.getStoredObject(dice_face), NumProp.side_index, 4)
+            }
         }
+        index += 1
     }
 }
 function make_die () {
     die = []
-    for (let index = 0; index < 2; index++) {
+    for (let index2 = 0; index2 < 2; index2++) {
         die.push(make_dice())
     }
     place_die()
@@ -326,8 +360,15 @@ function pick_a_die () {
         cursor.y = Math.constrain(cursor.y, 0, most_bottom)
         cursor_image.setPosition(cursor.x, cursor.y)
         if (controller.A.isPressed()) {
-            picked_die = [-1, -1]
-            break;
+            picked_die = [][0]
+            for (let face_die of sprites.allOfKind(SpriteKind.DiceFace)) {
+                if (cursor.overlapsWith(face_die)) {
+                    picked_die = [blockObject.getNumberProperty(blockObject.getStoredObject(face_die), NumProp.die_index), blockObject.getNumberProperty(blockObject.getStoredObject(face_die), NumProp.side_index)]
+                }
+            }
+            if (picked_die) {
+                break;
+            }
         } else if (controller.B.isPressed()) {
             picked_die = [-1, -1]
             break;
@@ -536,7 +577,7 @@ function place_die () {
 //     cost: (100 + 10%) * dice
 function generate_shop_upgrades () {
     shop_upgrades = []
-    for (let index = 0; index < 12; index++) {
+    for (let index2 = 0; index2 < 12; index2++) {
         randint2 = randint(0, 2)
         upgrade_data = blockObject.create()
         blockObject.setNumberProperty(upgrade_data, NumProp.upgrade_type, randint2)
@@ -574,7 +615,7 @@ function apply_upgrade (die_select: any[], upgrade_in_list: any[]) {
     	
     } else {
         if (blockObject.getNumberProperty(upgrade_in_list[0], NumProp.upgrade_type) == 0) {
-            for (let index = 0; index < blockObject.getNumberProperty(upgrade_in_list[0], NumProp.upgrade_variant); index++) {
+            for (let index2 = 0; index2 < blockObject.getNumberProperty(upgrade_in_list[0], NumProp.upgrade_variant); index2++) {
                 die.push(make_dice())
             }
             place_die()
@@ -591,6 +632,7 @@ let cursor_image: Sprite = null
 let instructions_label: TextSprite = null
 let button: Sprite = null
 let dice_face: Sprite = null
+let index = 0
 let most_right = 0
 let most_bottom = 0
 let most_left = 0
