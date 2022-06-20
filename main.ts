@@ -626,6 +626,12 @@ function apply_upgrade (die_select: any[], upgrade_in_list: any[]) {
         if (die_select[0] == -1) {
             return false
         }
+        dice_data = blockObject.getStoredObject(die[die_select[0]])
+        if (blockObject.getNumberProperty(upgrade_in_list[0], NumProp.upgrade_type) == 1) {
+            blockObject.getNumberArrayProperty(dice_data, NumArrayProp.values)[die_select[1]] = blockObject.getNumberArrayProperty(dice_data, NumArrayProp.values)[die_select[1]] + blockObject.getNumberProperty(upgrade_in_list[0], NumProp.upgrade_variant)
+        } else if (blockObject.getNumberProperty(upgrade_in_list[0], NumProp.upgrade_type) == 2) {
+        	
+        }
     } else {
         if (blockObject.getNumberProperty(upgrade_in_list[0], NumProp.upgrade_type) == 0) {
             for (let index2 = 0; index2 < blockObject.getNumberProperty(upgrade_in_list[0], NumProp.upgrade_variant); index2++) {
