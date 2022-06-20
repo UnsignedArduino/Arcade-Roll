@@ -602,14 +602,12 @@ function place_die () {
 // Types of upgrades:
 // 1: Increment a die's side (+1 to +10)
 //     cost: (200 + 10%) + (increment * 5%)
-// 2: Multiply a die's sides (2x to 5x)
-//     cost: (500 + 20%) + (multiply * 10%)
 // 0: Buy more dice (+1 to +5)
 //     cost: (100 + 10%) * dice
 function generate_shop_upgrades () {
     shop_upgrades = []
     for (let index2 = 0; index2 < 12; index2++) {
-        randint2 = randint(0, 2)
+        randint2 = randint(0, 1)
         upgrade_data = blockObject.create()
         blockObject.setNumberProperty(upgrade_data, NumProp.upgrade_type, randint2)
         blockObject.setBooleanProperty(upgrade_data, BoolProp.upgrade_bought, false)
@@ -716,4 +714,3 @@ controller.configureRepeatEventDefaults(1000, 50)
 prepare_hud()
 make_die()
 generate_shop_upgrades()
-info.setScore(1000)
