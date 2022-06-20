@@ -97,10 +97,10 @@ controller.A.onEvent(ControllerButtonEvent.Pressed, function () {
                         previous_selected = selected_grid_button
                         if (does_upgrade_type_need_die(blockObject.getNumberProperty(shop_upgrades[selected_grid_button], NumProp.upgrade_type))) {
                             if (apply_upgrade(pick_a_die(), [shop_upgrades[selected_grid_button]])) {
-                                info.changeScoreBy(-1 * blockObject.getNumberProperty(shop_upgrades[selected_grid_button], NumProp.upgrade_cost))
-                                blockObject.setBooleanProperty(shop_upgrades[selected_grid_button], BoolProp.upgrade_bought, true)
+                                info.changeScoreBy(-1 * blockObject.getNumberProperty(shop_upgrades[previous_selected], NumProp.upgrade_cost))
+                                blockObject.setBooleanProperty(shop_upgrades[previous_selected], BoolProp.upgrade_bought, true)
                                 for (let index2 = 0; index2 < 3; index2++) {
-                                    grid_buttons[selected_grid_button].startEffect(effects.confetti, 1000)
+                                    grid_buttons[previous_selected].startEffect(effects.confetti, 1000)
                                 }
                             }
                         } else {
