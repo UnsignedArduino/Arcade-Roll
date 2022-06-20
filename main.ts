@@ -352,6 +352,7 @@ function pick_a_die () {
     controller.moveSprite(cursor)
     scene.cameraFollowSprite(cursor)
     create_all_face_die()
+    cursor.setPosition(most_right / 2, most_bottom / 2)
     while (controller.A.isPressed()) {
         pause(0)
     }
