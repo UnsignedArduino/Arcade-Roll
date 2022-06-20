@@ -646,6 +646,196 @@ f 1 1 1 1 1 1 1 1 1 1 1 1 1 1 f
 f f 
 f f 
 `;
+            case "image36":
+            case "die_side_7":return img`
+. . f f f f f f f f f f f f . . 
+. f 1 1 1 1 1 1 1 1 1 1 1 1 f . 
+f 1 1 1 1 1 1 1 1 1 1 1 1 1 1 f 
+f 1 1 f f 1 1 1 1 1 1 f f 1 1 f 
+f 1 1 f f 1 1 1 1 1 1 f f 1 1 f 
+f 1 1 1 1 1 1 1 1 1 1 1 1 1 1 f 
+f 1 1 1 1 1 1 1 1 1 1 1 1 1 1 f 
+f 1 1 f f 1 1 f f 1 1 f f 1 1 f 
+f 1 1 f f 1 1 f f 1 1 f f 1 1 f 
+f 1 1 1 1 1 1 1 1 1 1 1 1 1 1 f 
+f 1 1 1 1 1 1 1 1 1 1 1 1 1 1 f 
+f 1 1 f f 1 1 1 1 1 1 f f 1 1 f 
+f 1 1 f f 1 1 1 1 1 1 f f 1 1 f 
+f 1 1 1 1 1 1 1 1 1 1 1 1 1 1 f 
+. f 1 1 1 1 1 1 1 1 1 1 1 1 f . 
+. . f f f f f f f f f f f f . . 
+`;
+            case "image37":
+            case "die_side_8":return img`
+. . f f f f f f f f f f f f . . 
+. f 1 1 1 1 1 1 1 1 1 1 1 1 f . 
+f 1 1 1 1 1 1 1 1 1 1 1 1 1 1 f 
+f 1 1 f f 1 1 f f 1 1 f f 1 1 f 
+f 1 1 f f 1 1 f f 1 1 f f 1 1 f 
+f 1 1 1 1 1 1 1 1 1 1 1 1 1 1 f 
+f 1 1 1 1 1 1 1 1 1 1 1 1 1 1 f 
+f 1 1 f f 1 1 1 1 1 1 f f 1 1 f 
+f 1 1 f f 1 1 1 1 1 1 f f 1 1 f 
+f 1 1 1 1 1 1 1 1 1 1 1 1 1 1 f 
+f 1 1 1 1 1 1 1 1 1 1 1 1 1 1 f 
+f 1 1 f f 1 1 f f 1 1 f f 1 1 f 
+f 1 1 f f 1 1 f f 1 1 f f 1 1 f 
+f 1 1 1 1 1 1 1 1 1 1 1 1 1 1 f 
+. f 1 1 1 1 1 1 1 1 1 1 1 1 f . 
+. . f f f f f f f f f f f f . . 
+`;
+            case "image38":
+            case "die_side_9":return img`
+. . f f f f f f f f f f f f . . 
+. f 1 1 1 1 1 1 1 1 1 1 1 1 f . 
+f 1 1 1 1 1 1 1 1 1 1 1 1 1 1 f 
+f 1 1 f f 1 1 f f 1 1 f f 1 1 f 
+f 1 1 f f 1 1 f f 1 1 f f 1 1 f 
+f 1 1 1 1 1 1 1 1 1 1 1 1 1 1 f 
+f 1 1 1 1 1 1 1 1 1 1 1 1 1 1 f 
+f 1 1 f f 1 1 f f 1 1 f f 1 1 f 
+f 1 1 f f 1 1 f f 1 1 f f 1 1 f 
+f 1 1 1 1 1 1 1 1 1 1 1 1 1 1 f 
+f 1 1 1 1 1 1 1 1 1 1 1 1 1 1 f 
+f 1 1 f f 1 1 f f 1 1 f f 1 1 f 
+f 1 1 f f 1 1 f f 1 1 f f 1 1 f 
+f 1 1 1 1 1 1 1 1 1 1 1 1 1 1 f 
+. f 1 1 1 1 1 1 1 1 1 1 1 1 f . 
+. . f f f f f f f f f f f f . . 
+`;
+            case "image39":
+            case "die_side_10":return img`
+. . f f f f f f f f f f f f . . 
+. f 1 1 1 1 1 1 1 1 1 1 1 1 f . 
+f 1 1 1 1 1 1 1 1 1 1 1 1 1 1 f 
+f 1 1 f 1 1 f 1 1 f 1 1 f 1 1 f 
+f 1 1 1 1 1 1 1 1 1 1 1 1 1 1 f 
+f 1 1 1 1 1 1 1 1 1 1 1 1 1 1 f 
+f 1 1 f 1 1 1 1 1 1 1 1 1 1 1 f 
+f 1 1 1 1 1 1 1 1 1 1 1 1 1 1 f 
+f 1 1 1 1 1 1 1 1 1 1 1 1 1 1 f 
+f 1 1 1 1 1 1 1 1 1 1 1 f 1 1 f 
+f 1 1 1 1 1 1 1 1 1 1 1 1 1 1 f 
+f 1 1 1 1 1 1 1 1 1 1 1 1 1 1 f 
+f 1 1 f 1 1 f 1 1 f 1 1 f 1 1 f 
+f 1 1 1 1 1 1 1 1 1 1 1 1 1 1 f 
+. f 1 1 1 1 1 1 1 1 1 1 1 1 f . 
+. . f f f f f f f f f f f f . . 
+`;
+            case "image41":
+            case "die_side_12":return img`
+. . f f f f f f f f f f f f . . 
+. f 1 1 1 1 1 1 1 1 1 1 1 1 f . 
+f 1 1 1 1 1 1 1 1 1 1 1 1 1 1 f 
+f 1 1 f 1 1 f 1 1 f 1 1 f 1 1 f 
+f 1 1 1 1 1 1 1 1 1 1 1 1 1 1 f 
+f 1 1 1 1 1 1 1 1 1 1 1 1 1 1 f 
+f 1 1 f 1 1 1 1 1 1 1 1 f 1 1 f 
+f 1 1 1 1 1 1 1 1 1 1 1 1 1 1 f 
+f 1 1 1 1 1 1 1 1 1 1 1 1 1 1 f 
+f 1 1 f 1 1 1 1 1 1 1 1 f 1 1 f 
+f 1 1 1 1 1 1 1 1 1 1 1 1 1 1 f 
+f 1 1 1 1 1 1 1 1 1 1 1 1 1 1 f 
+f 1 1 f 1 1 f 1 1 f 1 1 f 1 1 f 
+f 1 1 1 1 1 1 1 1 1 1 1 1 1 1 f 
+. f 1 1 1 1 1 1 1 1 1 1 1 1 f . 
+. . f f f f f f f f f f f f . . 
+`;
+            case "image40":
+            case "die_side_11":return img`
+. . f f f f f f f f f f f f . . 
+. f 1 1 1 1 1 1 1 1 1 1 1 1 f . 
+f 1 1 1 1 1 1 1 1 1 1 1 1 1 1 f 
+f 1 1 f 1 1 f 1 1 f 1 1 f 1 1 f 
+f 1 1 1 1 1 1 1 1 1 1 1 1 1 1 f 
+f 1 1 1 1 1 1 1 1 1 1 1 1 1 1 f 
+f 1 1 f 1 1 1 1 1 1 1 1 1 1 1 f 
+f 1 1 1 1 1 1 f f 1 1 1 1 1 1 f 
+f 1 1 1 1 1 1 f f 1 1 1 1 1 1 f 
+f 1 1 1 1 1 1 1 1 1 1 1 f 1 1 f 
+f 1 1 1 1 1 1 1 1 1 1 1 1 1 1 f 
+f 1 1 1 1 1 1 1 1 1 1 1 1 1 1 f 
+f 1 1 f 1 1 f 1 1 f 1 1 f 1 1 f 
+f 1 1 1 1 1 1 1 1 1 1 1 1 1 1 f 
+. f 1 1 1 1 1 1 1 1 1 1 1 1 f . 
+. . f f f f f f f f f f f f . . 
+`;
+            case "image42":
+            case "die_side_13":return img`
+. . f f f f f f f f f f f f . . 
+. f 1 1 1 1 1 1 1 1 1 1 1 1 f . 
+f 1 1 1 1 1 1 1 1 1 1 1 1 1 1 f 
+f 1 1 f 1 1 f 1 1 f 1 1 f 1 1 f 
+f 1 1 1 1 1 1 1 1 1 1 1 1 1 1 f 
+f 1 1 1 1 1 1 1 1 1 1 1 1 1 1 f 
+f 1 1 f 1 1 1 1 1 1 1 1 f 1 1 f 
+f 1 1 1 1 1 1 f f 1 1 1 1 1 1 f 
+f 1 1 1 1 1 1 f f 1 1 1 1 1 1 f 
+f 1 1 f 1 1 1 1 1 1 1 1 f 1 1 f 
+f 1 1 1 1 1 1 1 1 1 1 1 1 1 1 f 
+f 1 1 1 1 1 1 1 1 1 1 1 1 1 1 f 
+f 1 1 f 1 1 f 1 1 f 1 1 f 1 1 f 
+f 1 1 1 1 1 1 1 1 1 1 1 1 1 1 f 
+. f 1 1 1 1 1 1 1 1 1 1 1 1 f . 
+. . f f f f f f f f f f f f . . 
+`;
+            case "image43":
+            case "die_side_14":return img`
+. . f f f f f f f f f f f f . . 
+. f 1 1 1 1 1 1 1 1 1 1 1 1 f . 
+f 1 1 1 1 1 1 1 1 1 1 1 1 1 1 f 
+f 1 1 f 1 1 f 1 1 f 1 1 f 1 1 f 
+f 1 1 1 1 1 1 1 1 1 1 1 1 1 1 f 
+f 1 1 1 1 1 1 1 1 1 1 1 1 1 1 f 
+f 1 1 f 1 1 f 1 1 1 1 1 f 1 1 f 
+f 1 1 1 1 1 1 1 1 1 1 1 1 1 1 f 
+f 1 1 1 1 1 1 1 1 1 1 1 1 1 1 f 
+f 1 1 f 1 1 1 1 1 f 1 1 f 1 1 f 
+f 1 1 1 1 1 1 1 1 1 1 1 1 1 1 f 
+f 1 1 1 1 1 1 1 1 1 1 1 1 1 1 f 
+f 1 1 f 1 1 f 1 1 f 1 1 f 1 1 f 
+f 1 1 1 1 1 1 1 1 1 1 1 1 1 1 f 
+. f 1 1 1 1 1 1 1 1 1 1 1 1 f . 
+. . f f f f f f f f f f f f . . 
+`;
+            case "image44":
+            case "die_side_15":return img`
+. . f f f f f f f f f f f f . . 
+. f 1 1 1 1 1 1 1 1 1 1 1 1 f . 
+f 1 1 1 1 1 1 1 1 1 1 1 1 1 1 f 
+f 1 1 f 1 1 f 1 1 f 1 1 f 1 1 f 
+f 1 1 1 1 1 1 1 1 1 1 1 1 1 1 f 
+f 1 1 1 1 1 1 1 1 1 1 1 1 1 1 f 
+f 1 1 f 1 1 f 1 1 1 1 1 f 1 1 f 
+f 1 1 1 1 1 1 f f 1 1 1 1 1 1 f 
+f 1 1 1 1 1 1 f f 1 1 1 1 1 1 f 
+f 1 1 f 1 1 1 1 1 f 1 1 f 1 1 f 
+f 1 1 1 1 1 1 1 1 1 1 1 1 1 1 f 
+f 1 1 1 1 1 1 1 1 1 1 1 1 1 1 f 
+f 1 1 f 1 1 f 1 1 f 1 1 f 1 1 f 
+f 1 1 1 1 1 1 1 1 1 1 1 1 1 1 f 
+. f 1 1 1 1 1 1 1 1 1 1 1 1 f . 
+. . f f f f f f f f f f f f . . 
+`;
+            case "image45":
+            case "die_side_16":return img`
+. . f f f f f f f f f f f f . . 
+. f 1 1 1 1 1 1 1 1 1 1 1 1 f . 
+f 1 1 1 1 1 1 1 1 1 1 1 1 1 1 f 
+f 1 1 f 1 1 f 1 1 f 1 1 f 1 1 f 
+f 1 1 1 1 1 1 1 1 1 1 1 1 1 1 f 
+f 1 1 1 1 1 1 1 1 1 1 1 1 1 1 f 
+f 1 1 f 1 1 f 1 1 f 1 1 f 1 1 f 
+f 1 1 1 1 1 1 1 1 1 1 1 1 1 1 f 
+f 1 1 1 1 1 1 1 1 1 1 1 1 1 1 f 
+f 1 1 f 1 1 f 1 1 f 1 1 f 1 1 f 
+f 1 1 1 1 1 1 1 1 1 1 1 1 1 1 f 
+f 1 1 1 1 1 1 1 1 1 1 1 1 1 1 f 
+f 1 1 f 1 1 f 1 1 f 1 1 f 1 1 f 
+f 1 1 1 1 1 1 1 1 1 1 1 1 1 1 f 
+. f 1 1 1 1 1 1 1 1 1 1 1 1 f . 
+. . f f f f f f f f f f f f . . 
+`;
         }
         return null;
     })

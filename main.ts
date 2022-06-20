@@ -458,6 +458,26 @@ function generate_die_side (number: number) {
         return assets.image`die_side_5`
     } else if (number == 6) {
         return assets.image`die_side_6`
+    } else if (number == 7) {
+        return assets.image`die_side_7`
+    } else if (number == 8) {
+        return assets.image`die_side_8`
+    } else if (number == 9) {
+        return assets.image`die_side_9`
+    } else if (number == 10) {
+        return assets.image`die_side_10`
+    } else if (number == 11) {
+        return assets.image`die_side_11`
+    } else if (number == 12) {
+        return assets.image`die_side_12`
+    } else if (number == 13) {
+        return assets.image`die_side_13`
+    } else if (number == 14) {
+        return assets.image`die_side_14`
+    } else if (number == 15) {
+        return assets.image`die_side_15`
+    } else if (number == 16) {
+        return assets.image`die_side_16`
     } else {
         return print_small_num_to_img(assets.image`unlabeled_die_side`.clone(), number, 3, 5)
     }
@@ -627,10 +647,15 @@ function apply_upgrade (die_select: any[], upgrade_in_list: any[]) {
             return false
         }
         dice_data = blockObject.getStoredObject(die[parseFloat(die_select[0])])
+        previous_value = blockObject.getNumberArrayProperty(dice_data, NumArrayProp.values)[parseFloat(die_select[1])]
         if (blockObject.getNumberProperty(upgrade_in_list[0], NumProp.upgrade_type) == 1) {
             blockObject.getNumberArrayProperty(dice_data, NumArrayProp.values)[parseFloat(die_select[1])] = blockObject.getNumberArrayProperty(dice_data, NumArrayProp.values)[parseFloat(die_select[1])] + blockObject.getNumberProperty(upgrade_in_list[0], NumProp.upgrade_variant)
         } else if (blockObject.getNumberProperty(upgrade_in_list[0], NumProp.upgrade_type) == 2) {
             blockObject.getNumberArrayProperty(dice_data, NumArrayProp.values)[parseFloat(die_select[1])] = blockObject.getNumberArrayProperty(dice_data, NumArrayProp.values)[parseFloat(die_select[1])] * blockObject.getNumberProperty(upgrade_in_list[0], NumProp.upgrade_variant)
+        }
+        blockObject.getNumberArrayProperty(dice_data, NumArrayProp.values)[parseFloat(die_select[1])] = Math.min(blockObject.getNumberArrayProperty(dice_data, NumArrayProp.values)[parseFloat(die_select[1])], 99)
+        if (blockObject.getNumberArrayProperty(dice_data, NumArrayProp.values)[parseFloat(die_select[1])] == previous_value) {
+            return false
         }
     } else {
         if (blockObject.getNumberProperty(upgrade_in_list[0], NumProp.upgrade_type) == 0) {
@@ -643,6 +668,7 @@ function apply_upgrade (die_select: any[], upgrade_in_list: any[]) {
     }
     return true
 }
+let previous_value = 0
 let upgrade_data: blockObject.BlockObject = null
 let randint2 = 0
 let to_roll = 0
