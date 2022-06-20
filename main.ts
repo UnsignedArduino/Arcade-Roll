@@ -307,10 +307,12 @@ function pick_a_die () {
     instructions_label.bottom = scene.screenHeight() - 2
     instructions_label.z = 10
     instructions_label.setFlag(SpriteFlag.Ghost, true)
+    instructions_label.setFlag(SpriteFlag.RelativeToCamera, true)
     cursor_image = sprites.create(assets.image`cursor_image`, SpriteKind.Player)
     cursor = sprites.create(assets.image`cursor`, SpriteKind.Player)
     cursor_image.z = 2
     controller.moveSprite(cursor)
+    scene.cameraFollowSprite(cursor)
     create_all_face_die()
     while (controller.A.isPressed()) {
         pause(0)
@@ -331,6 +333,8 @@ function pick_a_die () {
     cursor.destroy()
     cursor_image.destroy()
     sprites.destroyAllSpritesOfKind(SpriteKind.DiceFace)
+    scene.cameraFollowSprite(null)
+    scene.centerCameraAt(scene.screenWidth() / 2, scene.screenHeight() / 2)
     show_shop()
     make_shop_upgrade_buttons()
     return picked_die
