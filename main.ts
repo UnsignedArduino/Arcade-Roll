@@ -246,6 +246,8 @@ function place_grid_buttons () {
 function create_all_face_die () {
     most_top = die[0].top
     most_left = die[0].left
+    most_bottom = 0
+    most_right = 0
     for (let dice of die) {
         dice_data = blockObject.getStoredObject(dice)
         if (true) {
@@ -267,6 +269,7 @@ function create_all_face_die () {
             dice_face = sprites.create(generate_die_side(blockObject.getNumberArrayProperty(dice_data, NumArrayProp.values)[2]), SpriteKind.DiceFace)
             dice_face.top = (dice.top - most_top) / 18 * (4.5 * 18) + 1 * 18
             dice_face.left = (dice.left - most_left) / 18 * (3.5 * 18) + 2 * 18
+            most_right = Math.max(most_right, dice_face.right)
         }
         if (true) {
             dice_face = sprites.create(generate_die_side(blockObject.getNumberArrayProperty(dice_data, NumArrayProp.values)[5]), SpriteKind.DiceFace)
@@ -277,6 +280,7 @@ function create_all_face_die () {
             dice_face = sprites.create(generate_die_side(blockObject.getNumberArrayProperty(dice_data, NumArrayProp.values)[4]), SpriteKind.DiceFace)
             dice_face.top = (dice.top - most_top) / 18 * (4.5 * 18) + 3 * 18
             dice_face.left = (dice.left - most_left) / 18 * (3.5 * 18) + 1 * 18
+            most_bottom = Math.max(most_bottom, dice_face.bottom)
         }
     }
 }
@@ -318,6 +322,8 @@ function pick_a_die () {
         pause(0)
     }
     while (true) {
+        cursor.x = Math.constrain(cursor.x, 0, most_right)
+        cursor.y = Math.constrain(cursor.y, 0, most_bottom)
         cursor_image.setPosition(cursor.x, cursor.y)
         if (controller.A.isPressed()) {
             picked_die = [-1, -1]
@@ -326,6 +332,9 @@ function pick_a_die () {
             picked_die = [-1, -1]
             break;
         }
+        pause(0)
+    }
+    while (controller.A.isPressed()) {
         pause(0)
     }
     picking_die = false
@@ -582,6 +591,8 @@ let cursor_image: Sprite = null
 let instructions_label: TextSprite = null
 let button: Sprite = null
 let dice_face: Sprite = null
+let most_right = 0
+let most_bottom = 0
 let most_left = 0
 let most_top = 0
 let curr_top = 0
