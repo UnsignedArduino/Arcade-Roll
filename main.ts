@@ -76,7 +76,7 @@ function roll_die () {
         dice.setImage(generate_die_side(blockObject.getNumberArrayProperty(dice_data, NumArrayProp.values)[blockObject.getNumberProperty(dice_data, NumProp.selected)]))
         blockObject.storeOnSprite(dice_data, dice)
     }
-    info.changeScoreBy(raw_score * (raw_multiplier / 100))
+    info.changeScoreBy(Math.round(raw_score * (raw_multiplier / 100)))
     info.changeLifeBy(-1)
 }
 function cancel_rolling () {
@@ -612,11 +612,11 @@ function place_die () {
 }
 // Types of upgrades:
 // 1: Increment a die's side (+1 to +10)
-//     cost: (200 + 10%) + ((increment * 5%) + (increment * 100))
+//     cost: (200 + 10%) + ((increment * 5%) + (increment * 10))
 // 2: Multiply a die's sides (2x to 5x)
-//     cost: (500 + 20%) + ((multiply * 10%) + (multiply * 200))
+//     cost: (500 + 20%) + ((multiply * 10%) + (multiply * 20))
 // 3: Global percentage boost (+10% to +100)
-//     cost: (1000 + 50%) + ((percentage * 10%) + (percentage * 500))
+//     cost: (1000 + 50%) + ((percentage * 10%) + (percentage * 5))
 // 0: Buy more dice (+1 to +5)
 //     cost: (100 + 10%) * dice
 function generate_shop_upgrades () {
@@ -628,15 +628,15 @@ function generate_shop_upgrades () {
         blockObject.setBooleanProperty(upgrade_data, BoolProp.upgrade_bought, false)
         if (randint2 == 1) {
             blockObject.setNumberProperty(upgrade_data, NumProp.upgrade_variant, randint(1, 10))
-            blockObject.setNumberProperty(upgrade_data, NumProp.upgrade_cost, Math.round(200 + info.score() * 0.1 + (blockObject.getNumberProperty(upgrade_data, NumProp.upgrade_variant) * (info.score() * 0.05) + blockObject.getNumberProperty(upgrade_data, NumProp.upgrade_variant) * 100)))
+            blockObject.setNumberProperty(upgrade_data, NumProp.upgrade_cost, Math.round(200 + info.score() * 0.1 + (blockObject.getNumberProperty(upgrade_data, NumProp.upgrade_variant) * (info.score() * 0.05) + blockObject.getNumberProperty(upgrade_data, NumProp.upgrade_variant) * 10)))
             blockObject.setBooleanProperty(upgrade_data, BoolProp.need_dice_picked, true)
         } else if (randint2 == 2) {
             blockObject.setNumberProperty(upgrade_data, NumProp.upgrade_variant, randint(2, 5))
-            blockObject.setNumberProperty(upgrade_data, NumProp.upgrade_cost, Math.round(500 + info.score() * 0.2 + (blockObject.getNumberProperty(upgrade_data, NumProp.upgrade_variant) * (info.score() * 0.1) + blockObject.getNumberProperty(upgrade_data, NumProp.upgrade_variant) * 200)))
+            blockObject.setNumberProperty(upgrade_data, NumProp.upgrade_cost, Math.round(500 + info.score() * 0.2 + (blockObject.getNumberProperty(upgrade_data, NumProp.upgrade_variant) * (info.score() * 0.1) + blockObject.getNumberProperty(upgrade_data, NumProp.upgrade_variant) * 20)))
             blockObject.setBooleanProperty(upgrade_data, BoolProp.need_dice_picked, true)
         } else if (randint2 == 3) {
             blockObject.setNumberProperty(upgrade_data, NumProp.upgrade_variant, randint(10, 99))
-            blockObject.setNumberProperty(upgrade_data, NumProp.upgrade_cost, Math.round(1000 + info.score() * 0.5 + (blockObject.getNumberProperty(upgrade_data, NumProp.upgrade_variant) * (info.score() * 0.1) + blockObject.getNumberProperty(upgrade_data, NumProp.upgrade_variant) * 500)))
+            blockObject.setNumberProperty(upgrade_data, NumProp.upgrade_cost, Math.round(1000 + info.score() * 0.5 + (blockObject.getNumberProperty(upgrade_data, NumProp.upgrade_variant) * (info.score() * 0.1) + blockObject.getNumberProperty(upgrade_data, NumProp.upgrade_variant) * 5)))
             blockObject.setBooleanProperty(upgrade_data, BoolProp.need_dice_picked, true)
         } else {
             blockObject.setNumberProperty(upgrade_data, NumProp.upgrade_variant, randint(1, 5))
@@ -747,4 +747,4 @@ controller.configureRepeatEventDefaults(1000, 50)
 prepare_hud()
 make_die()
 generate_shop_upgrades()
-info.setScore(100000)
+info.setScore(5000)
