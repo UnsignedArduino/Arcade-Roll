@@ -234,6 +234,11 @@
         "mimeType": "image/x-mkcd-f4",
         "displayName": "global_percent_boost_button_hover"
     },
+    "image48": {
+        "data": "hwQQABAAAAAA////////APAREREREREPHxEREREREfEfERERERER8R8RHxERERHxH/H/EREREfEfER8RERER8R8RERERERHxHxEREREREfEf8REfERER8R8R8RERERHxHxEfEREREfEf8REfERER8R8RERERERHx8BEREREREQ8A////////AA==",
+        "mimeType": "image/x-mkcd-f4",
+        "displayName": "unlabeled_global_boost_side"
+    },
     "*": {
         "mimeType": "image/x-mkcd-f4",
         "dataEncoding": "base64",
