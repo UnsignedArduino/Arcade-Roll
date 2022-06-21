@@ -224,6 +224,16 @@
         "mimeType": "image/x-mkcd-f4",
         "displayName": "die_side_16"
     },
+    "image46": {
+        "data": "hwQQABAAAAAA////////APAREREREREPHxEREREREfEfERERERER8R8RHxERERHxH/H/ER8RH/EfER8REfER8R8RERERHxHxHxEREfEREfEf8f8fHxEf8R8RHxERERHxHxHxEREREfEf8f8fERER8R8RERERERHx8BEREREREQ8A////////AA==",
+        "mimeType": "image/x-mkcd-f4",
+        "displayName": "global_percent_boost_button"
+    },
+    "image47": {
+        "data": "hwQQABAAAAAAMzMzMzMzADAREREREREDExERERERETETERERERERMRMRExERERExEzEzERMREzETERMRETERMRMRERERExExExERETERETETMTMTExETMRMRExERERExExExERERETETMTMTERERMRMRERERERExMBEREREREQMAMzMzMzMzAA==",
+        "mimeType": "image/x-mkcd-f4",
+        "displayName": "global_percent_boost_button_hover"
+    },
     "*": {
         "mimeType": "image/x-mkcd-f4",
         "dataEncoding": "base64",
