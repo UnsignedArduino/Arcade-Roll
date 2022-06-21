@@ -48,7 +48,7 @@ function update_side_buttons () {
 controller.up.onEvent(ControllerButtonEvent.Pressed, function () {
     if (!(picking_die)) {
         if (in_shop && on_grid_buttons) {
-            if (selected_grid_button > 4) {
+            if (selected_grid_button >= 4) {
                 selected_grid_button = Math.max(selected_grid_button - 4, 0)
             }
         } else {
@@ -103,12 +103,19 @@ controller.A.onEvent(ControllerButtonEvent.Pressed, function () {
                     timer.background(function () {
                         previous_selected = selected_grid_button
                         if (does_upgrade_type_need_die(blockObject.getNumberProperty(shop_upgrades[selected_grid_button], NumProp.upgrade_type))) {
-                            if (apply_upgrade(pick_a_die(), [shop_upgrades[selected_grid_button]])) {
-                                info.changeScoreBy(-1 * blockObject.getNumberProperty(shop_upgrades[previous_selected], NumProp.upgrade_cost))
-                                blockObject.setBooleanProperty(shop_upgrades[previous_selected], BoolProp.upgrade_bought, true)
-                                for (let index2 = 0; index2 < 3; index2++) {
-                                    grid_buttons[previous_selected].startEffect(effects.confetti, 1000)
+                            while (true) {
+                                ret = apply_upgrade(pick_a_die(), [shop_upgrades[selected_grid_button]])
+                                if (ret == 0) {
+                                    info.changeScoreBy(-1 * blockObject.getNumberProperty(shop_upgrades[previous_selected], NumProp.upgrade_cost))
+                                    blockObject.setBooleanProperty(shop_upgrades[previous_selected], BoolProp.upgrade_bought, true)
+                                    for (let index2 = 0; index2 < 3; index2++) {
+                                        grid_buttons[previous_selected].startEffect(effects.confetti, 1000)
+                                    }
+                                } else if (ret == 2) {
+                                    scene.cameraShake(4, 200)
+                                    continue;
                                 }
+                                break;
                             }
                         } else {
                             apply_upgrade([], [shop_upgrades[selected_grid_button]])
@@ -355,6 +362,7 @@ function pick_a_die () {
     picking_die = true
     destroy_side_buttons()
     destroy_grid_buttons()
+    create_all_face_die()
     instructions_label = textsprite.create("A to upgrade, B to cancel", 0, 15)
     instructions_label.left = 2
     instructions_label.bottom = scene.screenHeight() - 2
@@ -362,11 +370,14 @@ function pick_a_die () {
     instructions_label.setFlag(SpriteFlag.Ghost, true)
     instructions_label.setFlag(SpriteFlag.RelativeToCamera, true)
     cursor_image = sprites.create(assets.image`cursor_image`, SpriteKind.Player)
-    cursor = sprites.create(assets.image`cursor`, SpriteKind.Player)
     cursor_image.z = 2
+    if (!(cursor)) {
+        cursor = sprites.create(assets.image`cursor`, SpriteKind.Player)
+        cursor.setPosition(most_right / 2, most_bottom / 2)
+    } else {
+        cursor.setFlag(SpriteFlag.Invisible, false)
+    }
     scene.cameraFollowSprite(cursor)
-    create_all_face_die()
-    cursor.setPosition(most_right / 2, most_bottom / 2)
     cursor_image.setPosition(cursor.x, cursor.y)
     while (controller.A.isPressed()) {
         pause(0)
@@ -398,7 +409,7 @@ function pick_a_die () {
     }
     picking_die = false
     instructions_label.destroy()
-    cursor.destroy()
+    cursor.setFlag(SpriteFlag.Invisible, true)
     cursor_image.destroy()
     sprites.destroyAllSpritesOfKind(SpriteKind.DiceFace)
     scene.cameraFollowSprite(null)
@@ -661,18 +672,18 @@ function make_shop_buttons () {
 function apply_upgrade (die_select: any[], upgrade_in_list: any[]) {
     if (does_upgrade_type_need_die(blockObject.getNumberProperty(upgrade_in_list[0], NumProp.upgrade_type))) {
         if (die_select[0] == -1) {
-            return false
+            return 1
         }
         dice_data = blockObject.getStoredObject(die[parseFloat(die_select[0])])
         previous_value = blockObject.getNumberArrayProperty(dice_data, NumArrayProp.values)[parseFloat(die_select[1])]
         if (blockObject.getNumberProperty(upgrade_in_list[0], NumProp.upgrade_type) == 1) {
             if (previous_value < 0) {
-                return false
+                return 2
             }
             blockObject.getNumberArrayProperty(dice_data, NumArrayProp.values)[parseFloat(die_select[1])] = blockObject.getNumberArrayProperty(dice_data, NumArrayProp.values)[parseFloat(die_select[1])] + blockObject.getNumberProperty(upgrade_in_list[0], NumProp.upgrade_variant)
         } else if (blockObject.getNumberProperty(upgrade_in_list[0], NumProp.upgrade_type) == 2) {
             if (previous_value < 0) {
-                return false
+                return 2
             }
             blockObject.getNumberArrayProperty(dice_data, NumArrayProp.values)[parseFloat(die_select[1])] = blockObject.getNumberArrayProperty(dice_data, NumArrayProp.values)[parseFloat(die_select[1])] * blockObject.getNumberProperty(upgrade_in_list[0], NumProp.upgrade_variant)
         } else if (blockObject.getNumberProperty(upgrade_in_list[0], NumProp.upgrade_type) == 3) {
@@ -684,7 +695,7 @@ function apply_upgrade (die_select: any[], upgrade_in_list: any[]) {
         }
         blockObject.getNumberArrayProperty(dice_data, NumArrayProp.values)[parseFloat(die_select[1])] = Math.constrain(blockObject.getNumberArrayProperty(dice_data, NumArrayProp.values)[parseFloat(die_select[1])], -99, 99)
         if (blockObject.getNumberArrayProperty(dice_data, NumArrayProp.values)[parseFloat(die_select[1])] == previous_value) {
-            return false
+            return 2
         }
     } else {
         if (blockObject.getNumberProperty(upgrade_in_list[0], NumProp.upgrade_type) == 0) {
@@ -695,7 +706,7 @@ function apply_upgrade (die_select: any[], upgrade_in_list: any[]) {
             show_dice(false)
         }
     }
-    return true
+    return 0
 }
 let previous_value = 0
 let upgrade_data: blockObject.BlockObject = null
@@ -720,6 +731,7 @@ let die_per_col = 0
 let die_per_row = 0
 let dice: Sprite = null
 let grid_buttons: Sprite[] = []
+let ret = 0
 let previous_selected = 0
 let shop_upgrades: blockObject.BlockObject[] = []
 let temp_sprite: TextSprite = null
