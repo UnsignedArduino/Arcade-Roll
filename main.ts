@@ -63,13 +63,16 @@ controller.up.onEvent(ControllerButtonEvent.Pressed, function () {
     }
 })
 function roll_die () {
+    raw_score = 0
+    raw_multiplier = 1
     for (let dice of die) {
         dice_data = blockObject.getStoredObject(dice)
         blockObject.setNumberProperty(dice_data, NumProp.selected, randint(0, blockObject.getNumberArrayProperty(dice_data, NumArrayProp.values).length - 1))
-        info.changeScoreBy(blockObject.getNumberArrayProperty(dice_data, NumArrayProp.values)[blockObject.getNumberProperty(dice_data, NumProp.selected)])
+        raw_score += blockObject.getNumberArrayProperty(dice_data, NumArrayProp.values)[blockObject.getNumberProperty(dice_data, NumProp.selected)]
         dice.setImage(generate_die_side(blockObject.getNumberArrayProperty(dice_data, NumArrayProp.values)[blockObject.getNumberProperty(dice_data, NumProp.selected)]))
         blockObject.storeOnSprite(dice_data, dice)
     }
+    info.changeScoreBy(raw_score * raw_multiplier)
     info.changeLifeBy(-1)
 }
 function cancel_rolling () {
@@ -696,6 +699,8 @@ let shop_upgrades: blockObject.BlockObject[] = []
 let temp_sprite: TextSprite = null
 let dice_data: blockObject.BlockObject = null
 let die: Sprite[] = []
+let raw_multiplier = 0
+let raw_score = 0
 let selected_grid_button = 0
 let selected_side_button = 0
 let button_data: blockObject.BlockObject = null
