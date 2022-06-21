@@ -64,15 +64,19 @@ controller.up.onEvent(ControllerButtonEvent.Pressed, function () {
 })
 function roll_die () {
     raw_score = 0
-    raw_multiplier = 1
+    raw_multiplier = 100
     for (let dice of die) {
         dice_data = blockObject.getStoredObject(dice)
         blockObject.setNumberProperty(dice_data, NumProp.selected, randint(0, blockObject.getNumberArrayProperty(dice_data, NumArrayProp.values).length - 1))
-        raw_score += blockObject.getNumberArrayProperty(dice_data, NumArrayProp.values)[blockObject.getNumberProperty(dice_data, NumProp.selected)]
+        if (blockObject.getNumberArrayProperty(dice_data, NumArrayProp.values)[blockObject.getNumberProperty(dice_data, NumProp.selected)] < 0) {
+            raw_multiplier += Math.abs(blockObject.getNumberArrayProperty(dice_data, NumArrayProp.values)[blockObject.getNumberProperty(dice_data, NumProp.selected)])
+        } else {
+            raw_score += blockObject.getNumberArrayProperty(dice_data, NumArrayProp.values)[blockObject.getNumberProperty(dice_data, NumProp.selected)]
+        }
         dice.setImage(generate_die_side(blockObject.getNumberArrayProperty(dice_data, NumArrayProp.values)[blockObject.getNumberProperty(dice_data, NumProp.selected)]))
         blockObject.storeOnSprite(dice_data, dice)
     }
-    info.changeScoreBy(raw_score * raw_multiplier)
+    info.changeScoreBy(raw_score * (raw_multiplier / 100))
     info.changeLifeBy(-1)
 }
 function cancel_rolling () {
