@@ -629,7 +629,7 @@ function generate_shop_upgrades () {
             blockObject.setNumberProperty(upgrade_data, NumProp.upgrade_cost, Math.round(500 + info.score() * 0.2 + blockObject.getNumberProperty(upgrade_data, NumProp.upgrade_variant) * (info.score() * 0.1)))
             blockObject.setBooleanProperty(upgrade_data, BoolProp.need_dice_picked, true)
         } else if (randint2 == 3) {
-            blockObject.setNumberProperty(upgrade_data, NumProp.upgrade_variant, randint(10, 100))
+            blockObject.setNumberProperty(upgrade_data, NumProp.upgrade_variant, randint(10, 99))
             blockObject.setNumberProperty(upgrade_data, NumProp.upgrade_cost, Math.round(1000 + info.score() * 0.5 + blockObject.getNumberProperty(upgrade_data, NumProp.upgrade_variant) * (info.score() * 0.1)))
             blockObject.setBooleanProperty(upgrade_data, BoolProp.need_dice_picked, true)
         } else {
