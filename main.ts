@@ -76,8 +76,10 @@ function roll_die () {
         dice.setImage(generate_die_side(blockObject.getNumberArrayProperty(dice_data, NumArrayProp.values)[blockObject.getNumberProperty(dice_data, NumProp.selected)]))
         blockObject.storeOnSprite(dice_data, dice)
     }
-    info.changeScoreBy(Math.round(raw_score * (raw_multiplier / 100)))
+    last_score = Math.round(raw_score * (raw_multiplier / 100))
+    info.changeScoreBy(last_score)
     info.changeLifeBy(-1)
+    recent_scores.push(last_score)
 }
 function cancel_rolling () {
     cancel_multiple_roll = true
@@ -708,6 +710,7 @@ function apply_upgrade (die_select: any[], upgrade_in_list: any[]) {
     }
     return 0
 }
+let recent_score: TextSprite = null
 let previous_value = 0
 let upgrade_data: blockObject.BlockObject = null
 let randint2 = 0
@@ -735,6 +738,7 @@ let ret = 0
 let previous_selected = 0
 let shop_upgrades: blockObject.BlockObject[] = []
 let temp_sprite: TextSprite = null
+let last_score = 0
 let dice_data: blockObject.BlockObject = null
 let die: Sprite[] = []
 let raw_multiplier = 0
@@ -749,6 +753,8 @@ let on_grid_buttons = false
 let in_shop = false
 let cancel_multiple_roll = false
 let rolling_multiple = false
+let recent_scores: number[] = []
+recent_scores = []
 rolling_multiple = false
 cancel_multiple_roll = false
 in_shop = false
@@ -760,3 +766,14 @@ prepare_hud()
 make_die()
 generate_shop_upgrades()
 info.setScore(5000)
+game.onUpdate(function () {
+    while (recent_scores.length > 0) {
+        recent_score = textsprite.create("+" + recent_scores.shift(), 0, 15)
+        recent_score.setFlag(SpriteFlag.AutoDestroy, true)
+        recent_score.setFlag(SpriteFlag.Ghost, true)
+        recent_score.z = 2
+        recent_score.top = 16
+        recent_score.right = scene.screenWidth()
+        recent_score.vy = -200
+    }
+})
