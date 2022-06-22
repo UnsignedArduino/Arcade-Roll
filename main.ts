@@ -76,7 +76,7 @@ function roll_die () {
         dice.setImage(generate_die_side(blockObject.getNumberArrayProperty(dice_data, NumArrayProp.values)[blockObject.getNumberProperty(dice_data, NumProp.selected)]))
         blockObject.storeOnSprite(dice_data, dice)
     }
-    last_score = Math.round(raw_score * (raw_multiplier / 100))
+    last_score = Math.round(raw_score * ((raw_multiplier + global_multiplier) / 100))
     info.changeScoreBy(last_score)
     info.changeLifeBy(-1)
     recent_scores.push(last_score)
@@ -710,6 +710,7 @@ function apply_upgrade (die_select: any[], upgrade_in_list: any[]) {
     }
     return 0
 }
+let global_multiplier_label: TextSprite = null
 let recent_score: TextSprite = null
 let previous_value = 0
 let upgrade_data: blockObject.BlockObject = null
@@ -754,6 +755,8 @@ let in_shop = false
 let cancel_multiple_roll = false
 let rolling_multiple = false
 let recent_scores: number[] = []
+let global_multiplier = 0
+global_multiplier = 0
 recent_scores = []
 rolling_multiple = false
 cancel_multiple_roll = false
@@ -776,4 +779,17 @@ game.onUpdate(function () {
         recent_score.right = scene.screenWidth()
         recent_score.vy = -200
     }
+})
+game.onUpdate(function () {
+    if (spriteutils.isDestroyed(global_multiplier_label)) {
+        global_multiplier_label = textsprite.create("", 1, 3)
+        global_multiplier_label.setIcon(assets.image`global_multiplier_icon`)
+        global_multiplier_label.setBorder(1, 3, 1)
+        global_multiplier_label.setFlag(SpriteFlag.Ghost, true)
+        global_multiplier_label.setFlag(SpriteFlag.RelativeToCamera, true)
+    }
+    global_multiplier_label.setFlag(SpriteFlag.Invisible, picking_die || global_multiplier == 0)
+    global_multiplier_label.setText("+" + global_multiplier + "%")
+    global_multiplier_label.left = -1
+    global_multiplier_label.bottom = scene.screenHeight() + 1
 })

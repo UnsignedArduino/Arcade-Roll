@@ -239,6 +239,11 @@
         "mimeType": "image/x-mkcd-f4",
         "displayName": "unlabeled_global_boost_side"
     },
+    "image49": {
+        "data": "hwQIAAgAAAAA//8A8PAADw//D/D/D//wDwAA8A//D//w//8PAP//AA==",
+        "mimeType": "image/x-mkcd-f4",
+        "displayName": "global_multiplier_icon"
+    },
     "*": {
         "mimeType": "image/x-mkcd-f4",
         "dataEncoding": "base64",

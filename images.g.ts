@@ -893,6 +893,17 @@ f 1 1 1 1 1 1 1 1 1 1 1 1 1 1 f
 . f 1 1 1 1 1 1 1 1 1 1 1 1 f . 
 . . f f f f f f f f f f f f . . 
 `;
+            case "image49":
+            case "global_multiplier_icon":return img`
+. . f f f f . . 
+. f . f . . f . 
+f . f f . f f f 
+f f f . . f f f 
+f . f f . f f f 
+f . . f . . f f 
+. f . . . f f . 
+. . f f f f . . 
+`;
         }
         return null;
     })
