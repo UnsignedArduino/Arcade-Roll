@@ -244,6 +244,16 @@
         "mimeType": "image/x-mkcd-f4",
         "displayName": "global_multiplier_icon"
     },
+    "image50": {
+        "data": "hwQQABAAAAAA////////APAREREREREPHxEREREREfEfEf8fERER8R/x//ERHxHxH/ER8fH/EfEf8fHxER8R8R8R/x8RERHxHxEREREREfEf8REf8f8f8R8R8RERHxHxHxEfERHxEfEf8REf8f8f8R8RERERERHx8BEREREREQ8A////////AA==",
+        "mimeType": "image/x-mkcd-f4",
+        "displayName": "global_percentage_boost_upgrade_button"
+    },
+    "image51": {
+        "data": "hwQQABAAAAAAMzMzMzMzADAREREREREDExERERERETETETMTERERMRMxMzERExExEzERMTEzETETMTExERMRMRMRMxMRERExExERERERETETMRETMTMTMRMRMRERExExExETERExETETMRETMTMTMRMRERERERExMBEREREREQMAMzMzMzMzAA==",
+        "mimeType": "image/x-mkcd-f4",
+        "displayName": "global_percentage_boost_upgrade_button_hover"
+    },
     "*": {
         "mimeType": "image/x-mkcd-f4",
         "dataEncoding": "base64",
