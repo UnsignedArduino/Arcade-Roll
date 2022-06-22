@@ -539,12 +539,14 @@ function show_dice (show: boolean) {
 }
 function ask_roll_dice_until () {
     to_roll = game.askForNumber("How much do you want to roll to?", 10)
-    if (to_roll > info.score()) {
-        make_cancel_rolls_buttons()
-        role_dice_multiple_until(to_roll)
-        make_game_buttons()
-    } else {
-        game.showLongText("You already have that many points!", DialogLayout.Bottom)
+    if (to_roll == to_roll) {
+        if (to_roll > info.score()) {
+            make_cancel_rolls_buttons()
+            role_dice_multiple_until(to_roll)
+            make_game_buttons()
+        } else {
+            game.showLongText("You already have that many points!", DialogLayout.Bottom)
+        }
     }
 }
 function destroy_grid_buttons () {
@@ -571,12 +573,14 @@ controller.down.onEvent(ControllerButtonEvent.Pressed, function () {
 })
 function ask_roll_dice_multiple_times () {
     to_roll = game.askForNumber("How many times do you want to roll?", 4)
-    if (to_roll <= info.life()) {
-        make_cancel_rolls_buttons()
-        role_dice_multiple_times(to_roll)
-        make_game_buttons()
-    } else {
-        game.showLongText("You can't roll over how many rolls you have left!", DialogLayout.Bottom)
+    if (to_roll == to_roll) {
+        if (to_roll <= info.life()) {
+            make_cancel_rolls_buttons()
+            role_dice_multiple_times(to_roll)
+            make_game_buttons()
+        } else {
+            game.showLongText("You can't roll over how many rolls you have left!", DialogLayout.Bottom)
+        }
     }
 }
 function role_dice_multiple_until (target: number) {
@@ -774,7 +778,7 @@ in_shop = false
 on_grid_buttons = false
 picking_die = false
 stats.turnStats(true)
-controller.configureRepeatEventDefaults(1000, 50)
+controller.configureRepeatEventDefaults(500, 50)
 prepare_hud()
 make_die()
 generate_shop_upgrades()
