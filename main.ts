@@ -26,6 +26,44 @@ namespace ImageProp {
     export const image = ImageProp.create()
     export const selected = ImageProp.create()
 }
+function start_screen () {
+    disable_buttons = true
+    scene.setBackgroundColor(13)
+    if (true) {
+        text_sprite = textsprite.create("ROLL!", 0, 15)
+        text_sprite.setMaxFontHeight(32)
+        text_sprite.setIcon(assets.image`title_screen_icon`)
+        text_sprite.setFlag(SpriteFlag.Ghost, true)
+        text_sprite.top = 8
+        text_sprite.left = 8
+    }
+    if (true) {
+        text_sprite = textsprite.create("A remake by", 0, 15)
+        text_sprite.setFlag(SpriteFlag.Ghost, true)
+        text_sprite.top = 44
+        text_sprite.left = 8
+    }
+    if (true) {
+        text_sprite = textsprite.create("UnsignedArduino", 0, 15)
+        text_sprite.setFlag(SpriteFlag.Ghost, true)
+        text_sprite.top = 54
+        text_sprite.left = 8
+    }
+    if (true) {
+        text_sprite = textsprite.create("Press A to start", 0, 15)
+        text_sprite.setFlag(SpriteFlag.Ghost, true)
+        text_sprite.bottom = scene.screenHeight() - 8
+        text_sprite.left = 8
+    }
+    while (!(controller.A.isPressed())) {
+        pause(0)
+    }
+    while (controller.A.isPressed()) {
+        pause(0)
+    }
+    sprites.destroyAllSpritesOfKind(SpriteKind.Text)
+    disable_buttons = false
+}
 function update_side_buttons () {
     if (!(spriteutils.isDestroyed(selected_side_label))) {
         selected_side_label.destroy()
@@ -46,7 +84,7 @@ function update_side_buttons () {
     }
 }
 controller.up.onEvent(ControllerButtonEvent.Pressed, function () {
-    if (!(picking_die)) {
+    if (!(picking_die) && !(disable_buttons)) {
         if (in_shop && on_grid_buttons) {
             if (selected_grid_button >= 4) {
                 selected_grid_button = Math.max(selected_grid_button - 4, 0)
@@ -106,7 +144,7 @@ function print_small_num_to_img (image2: Image, number: number, x: number, y: nu
     return image2
 }
 controller.A.onEvent(ControllerButtonEvent.Pressed, function () {
-    if (!(picking_die)) {
+    if (!(picking_die) && !(disable_buttons)) {
         if (rolling_multiple) {
             cancel_rolling()
         } else if (in_shop) {
@@ -179,7 +217,7 @@ function show_shop () {
     show_dice(false)
 }
 controller.left.onEvent(ControllerButtonEvent.Pressed, function () {
-    if (!(picking_die)) {
+    if (!(picking_die) && !(disable_buttons)) {
         if (in_shop) {
             if (on_grid_buttons) {
                 if (selected_grid_button % 4 == 0) {
@@ -454,7 +492,7 @@ function update_grid_buttons () {
     }
 }
 controller.right.onEvent(ControllerButtonEvent.Pressed, function () {
-    if (!(picking_die)) {
+    if (!(picking_die) && !(disable_buttons)) {
         if (in_shop) {
             if (on_grid_buttons) {
                 if (selected_grid_button % 4 == 3) {
@@ -574,7 +612,7 @@ function destroy_grid_buttons () {
     }
 }
 controller.down.onEvent(ControllerButtonEvent.Pressed, function () {
-    if (!(picking_die)) {
+    if (!(picking_die) && !(disable_buttons)) {
         if (in_shop && on_grid_buttons) {
             if (selected_grid_button < 8) {
                 selected_grid_button = Math.min(selected_grid_button + 4, grid_buttons.length - 1)
@@ -615,7 +653,7 @@ info.onLifeZero(function () {
     game.over(true)
 })
 controller.A.onEvent(ControllerButtonEvent.Repeated, function () {
-    if (!(picking_die)) {
+    if (!(picking_die) && !(disable_buttons)) {
         if (!(rolling_multiple) && !(in_shop)) {
             if (selected_side_button == 0) {
                 roll_die()
@@ -798,6 +836,8 @@ let selected_side_button = 0
 let button_data: blockObject.BlockObject = null
 let side_buttons: Sprite[] = []
 let selected_side_label: TextSprite = null
+let text_sprite: TextSprite = null
+let disable_buttons = false
 let picking_die = false
 let on_grid_buttons = false
 let in_shop = false
@@ -814,8 +854,10 @@ cancel_multiple_roll = false
 in_shop = false
 on_grid_buttons = false
 picking_die = false
+disable_buttons = false
 stats.turnStats(true)
 controller.configureRepeatEventDefaults(500, 50)
+start_screen()
 prepare_hud()
 make_die()
 generate_shop_upgrades()
