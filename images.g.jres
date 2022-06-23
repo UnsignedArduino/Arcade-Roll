@@ -269,6 +269,21 @@
         "mimeType": "image/x-mkcd-f4",
         "displayName": "die_side_bonus_777_upgrade_button_hover"
     },
+    "image55": {
+        "data": "hwQQABAAAAAA////////APAREREREREPHxEREREREfEf8fERERER8R/xHxERERHxHxEREREREfEf8fHx/x8R8R/xHxERERHxHxEREREREfEf8fHxER8R8R/xHxHxERHxHxERER8REfEfERHxER8R8R8RERERERHx8BEREREREQ8A////////AA==",
+        "mimeType": "image/x-mkcd-f4",
+        "displayName": "bonus_777_for_1_percent_upgrade_button"
+    },
+    "image56": {
+        "data": "hwQQABAAAAAAMzMzMzMzADAREREREREDExERERERETETMTERERERMRMxExERERExExERERERETETMTExMxMRMRMxExERERExExERERERETETMTExERMRMRMxExExERExExERERMRETETERExERMRMRMRERERERExMBEREREREQMAMzMzMzMzAA==",
+        "mimeType": "image/x-mkcd-f4",
+        "displayName": "bonus_777_for_1_percent_upgrade_button_hover"
+    },
+    "image57": {
+        "data": "hwQQABAAAAAA////////APAREREREREPHxEREREREfEf8fERERER8R/xHxERERHxHxEREREREfEf8fHx/x8R8R/xHxERERHxHxEREREREfEf8fHxER8R8R/xHxHxERHxHxERER8REfEfERHxER8R8R8RERERERHx8BEREREREQ8A////////AA==",
+        "mimeType": "image/x-mkcd-f4",
+        "displayName": "die_side_bonus_777_every_1_percent"
+    },
     "*": {
         "mimeType": "image/x-mkcd-f4",
         "dataEncoding": "base64",
