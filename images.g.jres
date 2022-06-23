@@ -254,6 +254,21 @@
         "mimeType": "image/x-mkcd-f4",
         "displayName": "global_percentage_boost_upgrade_button_hover"
     },
+    "image52": {
+        "data": "hwQQABAAAAAA////////APAREREREREPHxEREREREfEf8fERH/ER8R/xHxEf/x/xHxERER/xEfEf8fER8R8R8R/xHxERERHxHxERER8fEfEf8fER/xER8R/xHxERERHxHxERER8fEfEfERER/xER8R8RERERERHx8BEREREREQ8A////////AA==",
+        "mimeType": "image/x-mkcd-f4",
+        "displayName": "die_side_bonus_777"
+    },
+    "image53": {
+        "data": "hwQQABAAAAAA////////APAREREREREPHxEREREREfEf8fERH/ER8R/xHxEf/x/xHxERER/xEfEf8fER8R8R8R/xHxERERHxHxERER8fEfEf8fER/xER8R/xHxERERHxHxERER8fEfEfERER/xER8R8RERERERHx8BEREREREQ8A////////AA==",
+        "mimeType": "image/x-mkcd-f4",
+        "displayName": "die_side_777_bonus_upgrade_button"
+    },
+    "image54": {
+        "data": "hwQQABAAAAAAMzMzMzMzADAREREREREDExERERERETETMTEREzERMRMxExETMxMxExERERMxETETMTERMRMRMRMxExERERExExERERMTETETMTERMxERMRMxExERERExExERERMTETETERERMxERMRMRERERERExMBEREREREQMAMzMzMzMzAA==",
+        "mimeType": "image/x-mkcd-f4",
+        "displayName": "die_side_bonus_777_upgrade_button_hover"
+    },
     "*": {
         "mimeType": "image/x-mkcd-f4",
         "dataEncoding": "base64",

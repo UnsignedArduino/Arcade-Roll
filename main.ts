@@ -68,13 +68,19 @@ function roll_die () {
     for (let dice of die) {
         dice_data = blockObject.getStoredObject(dice)
         blockObject.setNumberProperty(dice_data, NumProp.selected, randint(0, blockObject.getNumberArrayProperty(dice_data, NumArrayProp.values).length - 1))
-        if (blockObject.getNumberArrayProperty(dice_data, NumArrayProp.values)[blockObject.getNumberProperty(dice_data, NumProp.selected)] < 0) {
+        if (blockObject.getNumberArrayProperty(dice_data, NumArrayProp.values)[blockObject.getNumberProperty(dice_data, NumProp.selected)] == -777) {
+            bonus_777_count += 1
+        } else if (blockObject.getNumberArrayProperty(dice_data, NumArrayProp.values)[blockObject.getNumberProperty(dice_data, NumProp.selected)] < 0) {
             raw_multiplier += Math.abs(blockObject.getNumberArrayProperty(dice_data, NumArrayProp.values)[blockObject.getNumberProperty(dice_data, NumProp.selected)])
         } else {
             raw_score += blockObject.getNumberArrayProperty(dice_data, NumArrayProp.values)[blockObject.getNumberProperty(dice_data, NumProp.selected)]
         }
         dice.setImage(generate_die_side(blockObject.getNumberArrayProperty(dice_data, NumArrayProp.values)[blockObject.getNumberProperty(dice_data, NumProp.selected)]))
         blockObject.storeOnSprite(dice_data, dice)
+    }
+    if (bonus_777_count >= 77) {
+        bonus_777_count += -77
+        raw_multiplier += 777
     }
     last_score = Math.round(raw_score * ((raw_multiplier + global_multiplier) / 100))
     info.changeScoreBy(last_score)
@@ -203,7 +209,7 @@ function does_upgrade_type_need_die (t: number) {
     1,
     2,
     3,
-    3
+    5
     ].indexOf(t) != -1
 }
 function make_cancel_rolls_buttons () {
@@ -498,6 +504,8 @@ function generate_die_side (number: number) {
         return assets.image`die_side_15`
     } else if (number == 16) {
         return assets.image`die_side_16`
+    } else if (number == -777) {
+        return assets.image`die_side_bonus_777`
     } else if (number < 0) {
         return print_small_num_to_img(assets.image`unlabeled_global_boost_side`.clone(), Math.abs(number), 3, 8)
     } else {
@@ -520,6 +528,8 @@ function make_shop_upgrade_buttons () {
                 grid_buttons.push(make_button(assets.image`global_percent_boost_button`, assets.image`global_percent_boost_button_hover`, "", "Give all die a global +" + blockObject.getNumberProperty(upgrade, NumProp.upgrade_variant) + "% boost when face landed on for $" + blockObject.getNumberProperty(upgrade, NumProp.upgrade_cost)))
             } else if (blockObject.getNumberProperty(upgrade, NumProp.upgrade_type) == 4) {
                 grid_buttons.push(make_button(assets.image`global_percentage_boost_upgrade_button`, assets.image`global_percentage_boost_upgrade_button_hover`, "", "Give all die a global +" + blockObject.getNumberProperty(upgrade, NumProp.upgrade_variant) + "% boost for $" + blockObject.getNumberProperty(upgrade, NumProp.upgrade_cost)))
+            } else if (blockObject.getNumberProperty(upgrade, NumProp.upgrade_type) == 5) {
+                grid_buttons.push(make_button(assets.image`die_side_777_bonus_upgrade_button`, assets.image`die_side_bonus_777_upgrade_button_hover`, "", "Get a +777% multiplier every 77 times this face is rolled for $" + blockObject.getNumberProperty(upgrade, NumProp.upgrade_cost)))
             } else {
                 if (blockObject.getNumberProperty(upgrade, NumProp.upgrade_variant) == 1) {
                     grid_buttons.push(make_button(assets.image`add_die_upgrade_button`, assets.image`add_die_upgrade_button_hover`, "", "Add 1 die for $" + blockObject.getNumberProperty(upgrade, NumProp.upgrade_cost)))
@@ -638,12 +648,14 @@ function place_die () {
 //     cost: (1000 + 50%) + ((percentage * 10%) + (percentage * 5))
 // 4: Global percentage boost (+1% to 10%)
 //     cost: (1000 + 10%) + ((percentage * 5%) + (percentage * 10)
+// 5: +777% every 77 times face landed on
+//     cost (100 + 5%)
 // 0: Buy more dice (+1 to +10)
 //     cost: (100 + 10%) * dice
 function generate_shop_upgrades () {
     shop_upgrades = []
     for (let index2 = 0; index2 < 12; index2++) {
-        randint2 = randint(0, 4)
+        randint2 = randint(0, 5)
         upgrade_data = blockObject.create()
         blockObject.setNumberProperty(upgrade_data, NumProp.upgrade_type, randint2)
         blockObject.setBooleanProperty(upgrade_data, BoolProp.upgrade_bought, false)
@@ -663,6 +675,9 @@ function generate_shop_upgrades () {
             blockObject.setNumberProperty(upgrade_data, NumProp.upgrade_variant, randint(1, 10))
             blockObject.setNumberProperty(upgrade_data, NumProp.upgrade_cost, Math.round(1000 + info.score() * 0.1 + (blockObject.getNumberProperty(upgrade_data, NumProp.upgrade_variant) * (info.score() * 0.05) + blockObject.getNumberProperty(upgrade_data, NumProp.upgrade_variant) * 10)))
             blockObject.setBooleanProperty(upgrade_data, BoolProp.need_dice_picked, false)
+        } else if (randint2 == 5) {
+            blockObject.setBooleanProperty(upgrade_data, BoolProp.need_dice_picked, true)
+            blockObject.setNumberProperty(upgrade_data, NumProp.upgrade_cost, Math.round(1000 + info.score() * 0.05))
         } else {
             blockObject.setNumberProperty(upgrade_data, NumProp.upgrade_variant, randint(1, 5))
             blockObject.setNumberProperty(upgrade_data, NumProp.upgrade_cost, Math.round((100 + info.score() * 0.1) * blockObject.getNumberProperty(upgrade_data, NumProp.upgrade_variant)))
@@ -706,10 +721,16 @@ function apply_upgrade (die_select: any[], upgrade_in_list: any[]) {
             } else {
                 blockObject.getNumberArrayProperty(dice_data, NumArrayProp.values)[parseFloat(die_select[1])] = blockObject.getNumberProperty(upgrade_in_list[0], NumProp.upgrade_variant) * -1
             }
-        }
-        blockObject.getNumberArrayProperty(dice_data, NumArrayProp.values)[parseFloat(die_select[1])] = Math.constrain(blockObject.getNumberArrayProperty(dice_data, NumArrayProp.values)[parseFloat(die_select[1])], -99, 99)
-        if (blockObject.getNumberArrayProperty(dice_data, NumArrayProp.values)[parseFloat(die_select[1])] == previous_value) {
-            return 2
+        } else if (blockObject.getNumberProperty(upgrade_in_list[0], NumProp.upgrade_type) == 5) {
+            blockObject.getNumberArrayProperty(dice_data, NumArrayProp.values)[parseFloat(die_select[1])] = -777
+            if (blockObject.getNumberArrayProperty(dice_data, NumArrayProp.values)[parseFloat(die_select[1])] == -777) {
+            	
+            } else {
+                blockObject.getNumberArrayProperty(dice_data, NumArrayProp.values)[parseFloat(die_select[1])] = Math.constrain(blockObject.getNumberArrayProperty(dice_data, NumArrayProp.values)[parseFloat(die_select[1])], -99, 99)
+            }
+            if (blockObject.getNumberArrayProperty(dice_data, NumArrayProp.values)[parseFloat(die_select[1])] == previous_value) {
+                return 2
+            }
         }
     } else {
         if (blockObject.getNumberProperty(upgrade_in_list[0], NumProp.upgrade_type) == 0) {
@@ -769,8 +790,10 @@ let in_shop = false
 let cancel_multiple_roll = false
 let rolling_multiple = false
 let recent_scores: number[] = []
+let bonus_777_count = 0
 let global_multiplier = 0
 global_multiplier = 0
+bonus_777_count = 0
 recent_scores = []
 rolling_multiple = false
 cancel_multiple_roll = false
