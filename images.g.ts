@@ -1091,6 +1091,44 @@ ff1111111111111111111111111111ff
 ....ffffffffffffffffffffffff....
 ....ffffffffffffffffffffffff....
 `;
+            case "image59":
+            case "multiplier_bonus_per_die_upgrade":return img`
+. . f f f f f f f f f f f f . . 
+. f 1 1 1 1 1 1 1 1 1 1 1 1 f . 
+f 1 1 1 1 1 1 1 1 1 1 1 1 1 1 f 
+f 1 1 1 f f f 1 1 1 1 1 1 1 1 f 
+f 1 1 f 1 1 1 f 1 1 1 f 1 1 1 f 
+f 1 1 f 1 f 1 f 1 1 f f f 1 1 f 
+f 1 1 f 1 1 1 f 1 1 1 f 1 1 1 f 
+f 1 1 1 f f f 1 1 1 1 1 1 1 1 f 
+f 1 1 1 1 1 1 1 1 1 1 1 1 1 1 f 
+f 1 1 f 1 1 f 1 1 f 1 1 f 1 1 f 
+f 1 1 f f 1 f 1 1 1 1 f 1 1 1 f 
+f 1 1 f 1 f f 1 1 1 f 1 1 1 1 f 
+f 1 1 f 1 1 f 1 1 f 1 1 f 1 1 f 
+f 1 1 1 1 1 1 1 1 1 1 1 1 1 1 f 
+. f 1 1 1 1 1 1 1 1 1 1 1 1 f . 
+. . f f f f f f f f f f f f . . 
+`;
+            case "image60":
+            case "multiplier_bonus_per_die_selected_upgrade":return img`
+. . 3 3 3 3 3 3 3 3 3 3 3 3 . . 
+. 3 1 1 1 1 1 1 1 1 1 1 1 1 3 . 
+3 1 1 1 1 1 1 1 1 1 1 1 1 1 1 3 
+3 1 1 1 3 3 3 1 1 1 1 1 1 1 1 3 
+3 1 1 3 1 1 1 3 1 1 1 3 1 1 1 3 
+3 1 1 3 1 3 1 3 1 1 3 3 3 1 1 3 
+3 1 1 3 1 1 1 3 1 1 1 3 1 1 1 3 
+3 1 1 1 3 3 3 1 1 1 1 1 1 1 1 3 
+3 1 1 1 1 1 1 1 1 1 1 1 1 1 1 3 
+3 1 1 3 1 1 3 1 1 3 1 1 3 1 1 3 
+3 1 1 3 3 1 3 1 1 1 1 3 1 1 1 3 
+3 1 1 3 1 3 3 1 1 1 3 1 1 1 1 3 
+3 1 1 3 1 1 3 1 1 3 1 1 3 1 1 3 
+3 1 1 1 1 1 1 1 1 1 1 1 1 1 1 3 
+. 3 1 1 1 1 1 1 1 1 1 1 1 1 3 . 
+. . 3 3 3 3 3 3 3 3 3 3 3 3 . . 
+`;
         }
         return null;
     })

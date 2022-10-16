@@ -103,6 +103,7 @@ controller.up.onEvent(ControllerButtonEvent.Pressed, function () {
 function roll_die () {
     raw_score = 0
     raw_multiplier = 100
+    raw_die_multiplier = 100 + global_die_multiplier * die.length
     for (let dice of die) {
         dice_data = blockObject.getStoredObject(dice)
         blockObject.setNumberProperty(dice_data, NumProp.selected, randint(0, blockObject.getNumberArrayProperty(dice_data, NumArrayProp.values).length - 1))
@@ -124,7 +125,7 @@ function roll_die () {
         bonus_777_count += -77
         raw_multiplier += 777
     }
-    last_score = Math.round(raw_score * ((raw_multiplier + global_multiplier) / 100))
+    last_score = Math.round(raw_score * ((raw_multiplier + global_multiplier + raw_die_multiplier) / 100))
     info.changeScoreBy(last_score)
     info.changeLifeBy(-1)
     recent_scores.push(last_score)
@@ -577,6 +578,8 @@ function make_shop_upgrade_buttons () {
                 grid_buttons.push(make_button(assets.image`die_side_777_bonus_upgrade_button`, assets.image`die_side_bonus_777_upgrade_button_hover`, "", "Get a +777% multiplier every 77 times this face is rolled for $" + blockObject.getNumberProperty(upgrade, NumProp.upgrade_cost)))
             } else if (blockObject.getNumberProperty(upgrade, NumProp.upgrade_type) == 6) {
                 grid_buttons.push(make_button(assets.image`bonus_777_for_1_percent_upgrade_button`, assets.image`bonus_777_for_1_percent_upgrade_button_hover`, "", "Every time this face is rolled, there is a 1% chance of getting a +777% multiplier for $" + blockObject.getNumberProperty(upgrade, NumProp.upgrade_cost)))
+            } else if (blockObject.getNumberProperty(upgrade, NumProp.upgrade_type) == 7) {
+                grid_buttons.push(make_button(assets.image`multiplier_bonus_per_die_upgrade`, assets.image`multiplier_bonus_per_die_selected_upgrade`, "", "Give all die a global +" + blockObject.getNumberProperty(upgrade, NumProp.upgrade_variant) + "% boost for every die for $" + blockObject.getNumberProperty(upgrade, NumProp.upgrade_cost)))
             } else {
                 if (blockObject.getNumberProperty(upgrade, NumProp.upgrade_variant) == 1) {
                     grid_buttons.push(make_button(assets.image`add_die_upgrade_button`, assets.image`add_die_upgrade_button_hover`, "", "Add 1 die for $" + blockObject.getNumberProperty(upgrade, NumProp.upgrade_cost)))
@@ -687,6 +690,8 @@ function place_die () {
     }
 }
 // Types of upgrades:
+// 0: Buy more dice (+1 to +10)
+//     cost: (100 + 10%) * dice
 // 1: Increment a die's side (+1 to +10)
 //     cost: (200 + 10%) + ((increment * 5%) + (increment * 10))
 // 2: Multiply a die's sides (2x to 5x)
@@ -699,12 +704,12 @@ function place_die () {
 //     cost: (500 + 10%)
 // 6: 1% chance for +777% every time face landed on
 //     cost: (500 + 5%)
-// 0: Buy more dice (+1 to +10)
-//     cost: (100 + 10%) * dice
+// 7: Global multiplier for every die (+1% to +10%)
+//     cost: 1000 + 10% + (percentage * 2%) + (percentage * 20)
 function generate_shop_upgrades () {
     shop_upgrades = []
     for (let index2 = 0; index2 < 12; index2++) {
-        randint2 = randint(0, 6)
+        randint2 = randint(0, 7)
         upgrade_data = blockObject.create()
         blockObject.setNumberProperty(upgrade_data, NumProp.upgrade_type, randint2)
         blockObject.setBooleanProperty(upgrade_data, BoolProp.upgrade_bought, false)
@@ -730,6 +735,10 @@ function generate_shop_upgrades () {
         } else if (randint2 == 6) {
             blockObject.setNumberProperty(upgrade_data, NumProp.upgrade_cost, Math.round(500 + info.score() * 0.05))
             blockObject.setBooleanProperty(upgrade_data, BoolProp.need_dice_picked, true)
+        } else if (randint2 == 7) {
+            blockObject.setNumberProperty(upgrade_data, NumProp.upgrade_variant, randint(1, 10))
+            blockObject.setNumberProperty(upgrade_data, NumProp.upgrade_cost, Math.round(1000 + info.score() * 0.1 + (blockObject.getNumberProperty(upgrade_data, NumProp.upgrade_variant) * (info.score() * 0.02) + blockObject.getNumberProperty(upgrade_data, NumProp.upgrade_variant) * 20)))
+            blockObject.setBooleanProperty(upgrade_data, BoolProp.need_dice_picked, false)
         } else {
             blockObject.setNumberProperty(upgrade_data, NumProp.upgrade_variant, randint(1, 5))
             blockObject.setNumberProperty(upgrade_data, NumProp.upgrade_cost, Math.round((100 + info.score() * 0.1) * blockObject.getNumberProperty(upgrade_data, NumProp.upgrade_variant)))
@@ -793,10 +802,13 @@ function apply_upgrade (die_select: number[], upgrade_in_list: blockObject.Block
             show_dice(false)
         } else if (blockObject.getNumberProperty(upgrade_in_list[0], NumProp.upgrade_type) == 4) {
             global_multiplier += blockObject.getNumberProperty(upgrade_in_list[0], NumProp.upgrade_variant)
+        } else if (blockObject.getNumberProperty(upgrade_in_list[0], NumProp.upgrade_type) == 7) {
+            global_die_multiplier += blockObject.getNumberProperty(upgrade_in_list[0], NumProp.upgrade_variant)
         }
     }
     return 0
 }
+let display_multiplier = 0
 let global_multiplier_label: TextSprite = null
 let recent_score: TextSprite = null
 let previous_value = 0
@@ -829,6 +841,7 @@ let temp_sprite: TextSprite = null
 let last_score = 0
 let dice_data: blockObject.BlockObject = null
 let die: Sprite[] = []
+let raw_die_multiplier = 0
 let raw_multiplier = 0
 let raw_score = 0
 let selected_grid_button = 0
@@ -844,10 +857,12 @@ let in_shop = false
 let cancel_multiple_roll = false
 let rolling_multiple = false
 let recent_scores: number[] = []
+let global_die_multiplier = 0
 let bonus_777_count = 0
 let global_multiplier = 0
 global_multiplier = 0
 bonus_777_count = 0
+global_die_multiplier = 0
 recent_scores = []
 rolling_multiple = false
 cancel_multiple_roll = false
@@ -882,8 +897,9 @@ game.onUpdate(function () {
         global_multiplier_label.setFlag(SpriteFlag.RelativeToCamera, true)
         global_multiplier_label.z = 1
     }
-    global_multiplier_label.setFlag(SpriteFlag.Invisible, picking_die || global_multiplier == 0)
-    global_multiplier_label.setText("+" + global_multiplier + "%")
+    display_multiplier = global_multiplier + global_die_multiplier * die.length
+    global_multiplier_label.setFlag(SpriteFlag.Invisible, picking_die || display_multiplier == 0)
+    global_multiplier_label.setText("+" + display_multiplier + "%")
     global_multiplier_label.left = -1
     global_multiplier_label.bottom = scene.screenHeight() + 1
 })

@@ -289,6 +289,16 @@
         "mimeType": "image/x-mkcd-f4",
         "displayName": "title_screen_icon"
     },
+    "image59": {
+        "data": "hwQQABAAAAAA////////APAREREREREPHxEREREREfEfEf8f8f8f8R/xEfERHxHxH/Hx8RHxEfEf8RHx8f8f8R8R/x8RERHxHxEREREREfEfERER8REf8R8R8RER8RHxHxH/HxEfEfEfEfER8REf8R8RERERERHx8BEREREREQ8A////////AA==",
+        "mimeType": "image/x-mkcd-f4",
+        "displayName": "multiplier_bonus_per_die_upgrade"
+    },
+    "image60": {
+        "data": "hwQQABAAAAAAMzMzMzMzADAREREREREDExERERERETETETMTMTMTMRMxETERExExEzExMRExETETMRExMTMTMRMRMxMRERExExERERERETETERERMRETMRMRMRERMRExExEzExETETETETERMRETMRMRERERERExMBEREREREQMAMzMzMzMzAA==",
+        "mimeType": "image/x-mkcd-f4",
+        "displayName": "multiplier_bonus_per_die_selected_upgrade"
+    },
     "*": {
         "mimeType": "image/x-mkcd-f4",
         "dataEncoding": "base64",
