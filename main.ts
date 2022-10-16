@@ -750,38 +750,38 @@ function make_shop_buttons () {
     update_side_buttons()
     make_shop_upgrade_buttons()
 }
-function apply_upgrade (die_select: any[], upgrade_in_list: any[]) {
+function apply_upgrade (die_select: number[], upgrade_in_list: blockObject.BlockObject[]) {
     if (does_upgrade_type_need_die(blockObject.getNumberProperty(upgrade_in_list[0], NumProp.upgrade_type))) {
         if (die_select[0] == -1) {
             return 1
         }
-        dice_data = blockObject.getStoredObject(die[parseFloat(die_select[0])])
-        previous_value = blockObject.getNumberArrayProperty(dice_data, NumArrayProp.values)[parseFloat(die_select[1])]
+        dice_data = blockObject.getStoredObject(die[die_select[0]])
+        previous_value = blockObject.getNumberArrayProperty(dice_data, NumArrayProp.values)[die_select[1]]
         if (blockObject.getNumberProperty(upgrade_in_list[0], NumProp.upgrade_type) == 1) {
             if (previous_value < 0) {
                 return 2
             }
-            blockObject.getNumberArrayProperty(dice_data, NumArrayProp.values)[parseFloat(die_select[1])] = blockObject.getNumberArrayProperty(dice_data, NumArrayProp.values)[parseFloat(die_select[1])] + blockObject.getNumberProperty(upgrade_in_list[0], NumProp.upgrade_variant)
+            blockObject.getNumberArrayProperty(dice_data, NumArrayProp.values)[die_select[1]] = blockObject.getNumberArrayProperty(dice_data, NumArrayProp.values)[die_select[1]] + blockObject.getNumberProperty(upgrade_in_list[0], NumProp.upgrade_variant)
         } else if (blockObject.getNumberProperty(upgrade_in_list[0], NumProp.upgrade_type) == 2) {
             if (previous_value < 0) {
                 return 2
             }
-            blockObject.getNumberArrayProperty(dice_data, NumArrayProp.values)[parseFloat(die_select[1])] = blockObject.getNumberArrayProperty(dice_data, NumArrayProp.values)[parseFloat(die_select[1])] * blockObject.getNumberProperty(upgrade_in_list[0], NumProp.upgrade_variant)
+            blockObject.getNumberArrayProperty(dice_data, NumArrayProp.values)[die_select[1]] = blockObject.getNumberArrayProperty(dice_data, NumArrayProp.values)[die_select[1]] * blockObject.getNumberProperty(upgrade_in_list[0], NumProp.upgrade_variant)
         } else if (blockObject.getNumberProperty(upgrade_in_list[0], NumProp.upgrade_type) == 3) {
             if (previous_value < 0) {
-                blockObject.getNumberArrayProperty(dice_data, NumArrayProp.values)[parseFloat(die_select[1])] = blockObject.getNumberArrayProperty(dice_data, NumArrayProp.values)[parseFloat(die_select[1])] - blockObject.getNumberProperty(upgrade_in_list[0], NumProp.upgrade_variant)
+                blockObject.getNumberArrayProperty(dice_data, NumArrayProp.values)[die_select[1]] = blockObject.getNumberArrayProperty(dice_data, NumArrayProp.values)[die_select[1]] - blockObject.getNumberProperty(upgrade_in_list[0], NumProp.upgrade_variant)
             } else {
-                blockObject.getNumberArrayProperty(dice_data, NumArrayProp.values)[parseFloat(die_select[1])] = blockObject.getNumberProperty(upgrade_in_list[0], NumProp.upgrade_variant) * -1
+                blockObject.getNumberArrayProperty(dice_data, NumArrayProp.values)[die_select[1]] = blockObject.getNumberProperty(upgrade_in_list[0], NumProp.upgrade_variant) * -1
             }
         } else if (blockObject.getNumberProperty(upgrade_in_list[0], NumProp.upgrade_type) == 5) {
-            blockObject.getNumberArrayProperty(dice_data, NumArrayProp.values)[parseFloat(die_select[1])] = -777
+            blockObject.getNumberArrayProperty(dice_data, NumArrayProp.values)[die_select[1]] = -777
         } else if (blockObject.getNumberProperty(upgrade_in_list[0], NumProp.upgrade_type) == 6) {
-            blockObject.getNumberArrayProperty(dice_data, NumArrayProp.values)[parseFloat(die_select[1])] = -771
+            blockObject.getNumberArrayProperty(dice_data, NumArrayProp.values)[die_select[1]] = -771
         }
-        if ([-777, -771].indexOf(blockObject.getNumberArrayProperty(dice_data, NumArrayProp.values)[parseFloat(die_select[1])]) == -1) {
-            blockObject.getNumberArrayProperty(dice_data, NumArrayProp.values)[parseFloat(die_select[1])] = Math.constrain(blockObject.getNumberArrayProperty(dice_data, NumArrayProp.values)[parseFloat(die_select[1])], -99, 99)
+        if ([-777, -771].indexOf(blockObject.getNumberArrayProperty(dice_data, NumArrayProp.values)[die_select[1]]) == -1) {
+            blockObject.getNumberArrayProperty(dice_data, NumArrayProp.values)[die_select[1]] = Math.constrain(blockObject.getNumberArrayProperty(dice_data, NumArrayProp.values)[die_select[1]], -99, 99)
         }
-        if (blockObject.getNumberArrayProperty(dice_data, NumArrayProp.values)[parseFloat(die_select[1])] == previous_value) {
+        if (blockObject.getNumberArrayProperty(dice_data, NumArrayProp.values)[die_select[1]] == previous_value) {
             return 2
         }
     } else {
